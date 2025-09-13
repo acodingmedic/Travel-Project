@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#2563eb" />
+  <meta name="description" content="TravelAI - Intelligent travel planning powered by AI. Find your perfect trip with natural language queries and smart recommendations." />
+  <meta name="keywords" content="travel, AI, trip planning, vacation, booking, intelligent search, travel assistant" />
+  <meta name="author" content="TravelAI" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://travelai.com/" />
+  <meta property="og:title" content="TravelAI - Intelligent Travel Planning" />
+  <meta property="og:description" content="Plan your perfect trip with AI-powered travel recommendations. Simply describe what you want and let our intelligent system find the best options for you." />
+  <meta property="og:image" content="%PUBLIC_URL%/og-image.png" />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://travelai.com/" />
+  <meta property="twitter:title" content="TravelAI - Intelligent Travel Planning" />
+  <meta property="twitter:description" content="Plan your perfect trip with AI-powered travel recommendations. Simply describe what you want and let our intelligent system find the best options for you." />
+  <meta property="twitter:image" content="%PUBLIC_URL%/twitter-image.png" />
+  
+  <!-- Apple Touch Icon -->
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  
+  <!-- Preconnect to external domains for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Google Fonts - Optional, can be removed if not needed -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "TravelAI",
+    "description": "Intelligent travel planning powered by AI",
+    "url": "https://travelai.com",
+    "applicationCategory": "TravelApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "TravelAI"
+    }
+  }
+  </script>
+  
+  <title>TravelAI - Intelligent Travel Planning</title>
+  
+  <!-- Critical CSS for above-the-fold content -->
+  <style>
+    /* Critical CSS - Inline for performance */
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background-color: #f8fafc;
+      color: #1e293b;
+    }
+    
+    #root {
+      min-height: 100vh;
+    }
+    
+    /* Loading spinner for initial load */
+    .initial-loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #e2e8f0;
+      border-top-color: #2563eb;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
+    .loading-text {
+      color: #64748b;
+      font-size: 0.875rem;
+    }
+    
+    /* Hide loading when React app loads */
+    .app-loaded .initial-loading {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <noscript>
+    <div style="padding: 2rem; text-align: center; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; border-radius: 0.5rem; margin: 2rem;">
+      <h2>JavaScript Required</h2>
+      <p>TravelAI requires JavaScript to run. Please enable JavaScript in your browser and refresh the page.</p>
+      <p>If you're using a script blocker, please allow scripts from this domain.</p>
+    </div>
+  </noscript>
+  
+  <!-- Skip link for accessibility -->
+  <a href="#main-content" class="skip-link" style="position: absolute; top: -40px; left: 6px; background: #2563eb; color: white; padding: 8px; text-decoration: none; border-radius: 4px; z-index: 1000;">Skip to main content</a>
+  
+  <!-- Main app container -->
+  <div id="root">
+    <!-- Initial loading state -->
+    <div class="initial-loading">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Loading TravelAI...</div>
+    </div>
+  </div>
+  
+  <!-- Main content landmark for accessibility -->
+  <div id="main-content" style="display: none;"></div>
+  
+  <!-- Error boundary fallback -->
+  <div id="error-fallback" style="display: none; padding: 2rem; text-align: center; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; border-radius: 0.5rem; margin: 2rem;">
+    <h2>Something went wrong</h2>
+    <p>We're sorry, but something unexpected happened. Please refresh the page to try again.</p>
+    <button onclick="window.location.reload()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #2563eb; color: white; border: none; border-radius: 0.25rem; cursor: pointer;">Refresh Page</button>
+  </div>
+  
+  <!-- Service Worker registration script -->
+  <script>
+    // Register service worker for PWA capabilities
+    if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(function(registration) {
+            console.log('SW registered: ', registration);
+          })
+          .catch(function(registrationError) {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
+    
+    // Hide initial loading when React app mounts
+    window.addEventListener('DOMContentLoaded', function() {
+      // Set a timeout to hide loading if React doesn't load quickly
+      setTimeout(function() {
+        const loadingElement = document.querySelector('.initial-loading');
+        if (loadingElement && loadingElement.style.display !== 'none') {
+          document.getElementById('error-fallback').style.display = 'block';
+          loadingElement.style.display = 'none';
+        }
+      }, 10000); // 10 second timeout
+    });
+    
+    // Global error handler
+    window.addEventListener('error', function(event) {
+      console.error('Global error:', event.error);
+      // Could send to error reporting service
+    });
+    
+    window.addEventListener('unhandledrejection', function(event) {
+      console.error('Unhandled promise rejection:', event.reason);
+      // Could send to error reporting service
+    });
+  </script>
+  
+  <!-- Analytics placeholder - replace with your analytics code -->
+  <!-- 
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID');
+  </script>
+  -->
+</body>
+</html>

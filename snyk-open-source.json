@@ -1,0 +1,2212 @@
+{
+  "vulnerabilities": [
+    {
+      "id": "SNYK-JS-INFLIGHT-6095116",
+      "title": "Missing Release of Resource after Effective Lifetime",
+      "CVSSv3": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:P",
+      "credit": [
+        "jkomyno"
+      ],
+      "semver": {
+        "vulnerable": [
+          "*"
+        ]
+      },
+      "exploit": "Proof of Concept",
+      "fixedIn": [],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "js",
+      "severity": "medium",
+      "cvssScore": 6.2,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "inflight",
+      "references": [
+        {
+          "url": "https://github.com/isaacs/inflight/issues/5",
+          "title": "GitHub Issue"
+        },
+        {
+          "url": "https://github.com/logdna/logdna-agent/pull/157",
+          "title": "GitHub PR"
+        }
+      ],
+      "cvssDetails": [],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:P",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 6.2,
+          "cvssVersion": "3.1",
+          "modificationTime": "2024-03-13T12:24:01.140165Z"
+        }
+      ],
+      "description": "## Overview\n\nAffected versions of this package are vulnerable to Missing Release of Resource after Effective Lifetime via the `makeres` function due to improperly deleting keys from the `reqs` object after execution of callbacks. This behavior causes the keys to remain in the `reqs` object, which leads to resource exhaustion.\r\n\r\nExploiting this vulnerability results in crashing the `node` process or in the application crash.\r\n\r\n**Note:**\r\nThis library is not maintained, and currently, there is no fix for this issue. To overcome this vulnerability, several dependent packages have eliminated the use of this library.\r\n\r\nTo trigger the memory leak, an attacker would need to have the ability to execute or influence the asynchronous operations that use the inflight module within the application. This typically requires access to the internal workings of the server or application, which is not commonly exposed to remote users. Therefore, “Attack vector” is marked as “Local”.\n## PoC\n```js\r\nconst inflight = require('inflight');\r\n\r\nfunction testInflight() {\r\n  let i = 0;\r\n  function scheduleNext() {\r\n    let key = `key-${i++}`;\r\n    const callback = () => {\r\n    };\r\n    for (let j = 0; j < 1000000; j++) {\r\n      inflight(key, callback);\r\n    }\r\n\r\n    setImmediate(scheduleNext);\r\n  }\r\n\r\n\r\n  if (i % 100 === 0) {\r\n    console.log(process.memoryUsage());\r\n  }\r\n\r\n  scheduleNext();\r\n}\r\n\r\ntestInflight();\r\n```\n## Remediation\nThere is no fixed version for `inflight`.\n## References\n- [GitHub Issue](https://github.com/isaacs/inflight/issues/5)\n- [GitHub PR](https://github.com/logdna/logdna-agent/pull/157)\n",
+      "epssDetails": null,
+      "identifiers": {
+        "CVE": [],
+        "CWE": [
+          "CWE-772"
+        ]
+      },
+      "packageName": "inflight",
+      "proprietary": false,
+      "creationTime": "2023-11-30T12:51:43.483198Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2023-11-28T12:47:27Z",
+      "exploitDetails": {
+        "sources": [
+          "Snyk"
+        ],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Proof of Concept",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Proof of Concept",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "npm",
+      "publicationTime": "2023-11-30T12:52:55.469185Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2024-03-13T12:24:01.140165Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "medium",
+      "from": [
+        "travelai-platform@1.0.0",
+        "react-scripts@5.0.1",
+        "babel-jest@27.5.1",
+        "@jest/transform@27.5.1",
+        "babel-plugin-istanbul@6.1.1",
+        "test-exclude@6.0.0",
+        "glob@7.2.3",
+        "inflight@1.0.6"
+      ],
+      "upgradePath": [],
+      "isUpgradable": false,
+      "isPatchable": false,
+      "name": "inflight",
+      "version": "1.0.6"
+    },
+    {
+      "id": "SNYK-JS-MULTER-10185673",
+      "title": "Uncaught Exception",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:P",
+      "credit": [
+        "Max Mathieu"
+      ],
+      "semver": {
+        "vulnerable": [
+          "<2.0.0"
+        ]
+      },
+      "exploit": "Proof of Concept",
+      "fixedIn": [
+        "2.0.0"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "js",
+      "severity": "high",
+      "cvssScore": 8.7,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "multer",
+      "references": [
+        {
+          "url": "https://github.com/expressjs/multer/commit/2c8505f207d923dd8de13a9f93a4563e59933665",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/expressjs/multer/issues/1176",
+          "title": "GitHub Issue"
+        }
+      ],
+      "cvssDetails": [],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:P",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 8.7,
+          "cvssVersion": "4.0",
+          "modificationTime": "2025-05-20T14:50:49.594750Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:P",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 7.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-05-20T14:50:49.594750Z"
+        }
+      ],
+      "description": "## Overview\n\nAffected versions of this package are vulnerable to Uncaught Exception due to an `error` event thrown by `busboy`. An attacker can cause a full nodejs application to crash by sending a specially crafted multi-part upload request.\n## PoC\n```javascript\r\nconst express = require('express')\r\nconst multer  = require('multer')\r\nconst http  = require('http')\r\nconst upload = multer({ dest: 'uploads/' })\r\nconst port = 8888\r\n\r\nconst app = express()\r\n\r\napp.post('/upload', upload.single('file'), function (req, res) {\r\n  res.send({})\r\n})\r\n\r\napp.listen(port, () => {\r\n  console.log(`Listening on port ${port}`)\r\n\r\n  const boundary = 'AaB03x'\r\n  const body = [\r\n    '--' + boundary,\r\n    'Content-Disposition: form-data; name=\"file\"; filename=\"test.txt\"',\r\n    'Content-Type: text/plain',\r\n    '',\r\n    'test without end boundary'\r\n  ].join('\\r\\n')\r\n  const options = {\r\n    hostname: 'localhost',\r\n    port,\r\n    path: '/upload',\r\n    method: 'POST',\r\n    headers: {\r\n      'content-type': 'multipart/form-data; boundary=' + boundary,\r\n      'content-length': body.length,\r\n    }\r\n  }\r\n  const req = http.request(options, (res) => {\r\n    console.log(res.statusCode)\r\n  })\r\n  req.on('error', (err) => {\r\n    console.error(err)\r\n  })\r\n  req.write(body)\r\n  req.end()\r\n})\r\n```\n## Remediation\nUpgrade `multer` to version 2.0.0 or higher.\n## References\n- [GitHub Commit](https://github.com/expressjs/multer/commit/2c8505f207d923dd8de13a9f93a4563e59933665)\n- [GitHub Issue](https://github.com/expressjs/multer/issues/1176)\n",
+      "epssDetails": {
+        "percentile": "0.03082",
+        "probability": "0.00018",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2025-47944"
+        ],
+        "CWE": [
+          "CWE-248"
+        ],
+        "GHSA": [
+          "GHSA-4pg4-qvpc-4q3h"
+        ]
+      },
+      "packageName": "multer",
+      "proprietary": false,
+      "creationTime": "2025-05-20T06:59:06.612966Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2025-05-19T22:16:30Z",
+      "exploitDetails": {
+        "sources": [
+          "Snyk"
+        ],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Proof of Concept",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Proof of Concept",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "npm",
+      "publicationTime": "2025-05-20T14:50:49.586509Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-05-20T14:50:49.594750Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "high",
+      "from": [
+        "travelai-platform@1.0.0",
+        "multer@1.4.5-lts.2"
+      ],
+      "upgradePath": [
+        false,
+        "multer@2.0.0"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "multer",
+      "version": "1.4.5-lts.2"
+    },
+    {
+      "id": "SNYK-JS-MULTER-10185675",
+      "title": "Missing Release of Memory after Effective Lifetime",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+      "credit": [
+        "UnlimitedBytes"
+      ],
+      "semver": {
+        "vulnerable": [
+          "<2.0.0"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "2.0.0"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "js",
+      "severity": "high",
+      "cvssScore": 8.7,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "multer",
+      "references": [
+        {
+          "url": "https://github.com/expressjs/multer/commit/2c8505f207d923dd8de13a9f93a4563e59933665",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/expressjs/multer/pull/1120",
+          "title": "GitHub PR"
+        }
+      ],
+      "cvssDetails": [],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 8.7,
+          "cvssVersion": "4.0",
+          "modificationTime": "2025-05-20T13:48:08.461777Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 7.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-05-20T13:48:08.461777Z"
+        }
+      ],
+      "description": "## Overview\n\nAffected versions of this package are vulnerable to Missing Release of Memory after Effective Lifetime due to improper handling of error events in HTTP request streams, which fails to close the internal `busboy` stream. An attacker can cause a denial of service by repeatedly triggering errors in file upload streams, leading to resource exhaustion and memory leaks.\r\n\r\n**Note:**\r\n\r\nThis is only exploitable if the server is handling file uploads.\n## Remediation\nUpgrade `multer` to version 2.0.0 or higher.\n## References\n- [GitHub Commit](https://github.com/expressjs/multer/commit/2c8505f207d923dd8de13a9f93a4563e59933665)\n- [GitHub PR](https://github.com/expressjs/multer/pull/1120)\n",
+      "epssDetails": {
+        "percentile": "0.03082",
+        "probability": "0.00018",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2025-47935"
+        ],
+        "CWE": [
+          "CWE-401"
+        ],
+        "GHSA": [
+          "GHSA-44fp-w29j-9vj5"
+        ]
+      },
+      "packageName": "multer",
+      "proprietary": false,
+      "creationTime": "2025-05-20T07:17:52.523621Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2025-05-19T22:04:17Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "npm",
+      "publicationTime": "2025-05-20T13:48:08.453751Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-05-20T13:48:08.461777Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "high",
+      "from": [
+        "travelai-platform@1.0.0",
+        "multer@1.4.5-lts.2"
+      ],
+      "upgradePath": [
+        false,
+        "multer@2.0.0"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "multer",
+      "version": "1.4.5-lts.2"
+    },
+    {
+      "id": "SNYK-JS-MULTER-10299078",
+      "title": "Uncaught Exception",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H",
+      "credit": [
+        "Davit Vardanyan"
+      ],
+      "semver": {
+        "vulnerable": [
+          "<2.0.1"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "2.0.1"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "js",
+      "severity": "critical",
+      "cvssScore": 9.2,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "multer",
+      "references": [
+        {
+          "url": "https://github.com/expressjs/multer/commit/35a3272b611945155e046dd5cef11088587635e9",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/expressjs/multer/issues/1233",
+          "title": "GitHub Issue"
+        },
+        {
+          "url": "https://github.com/expressjs/multer/pull/1256",
+          "title": "GitHub PR"
+        }
+      ],
+      "cvssDetails": [],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:H",
+          "assigner": "Snyk",
+          "severity": "critical",
+          "baseScore": 9.2,
+          "cvssVersion": "4.0",
+          "modificationTime": "2025-06-04T14:52:32.637132Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 8.6,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-06-04T14:52:32.637132Z"
+        }
+      ],
+      "description": "## Overview\n\nAffected versions of this package are vulnerable to Uncaught Exception in `makeMiddleware`, when processing a file upload request. An attacker can cause the application to crash by sending a request with a field name containing an empty string.\n## Remediation\nUpgrade `multer` to version 2.0.1 or higher.\n## References\n- [GitHub Commit](https://github.com/expressjs/multer/commit/35a3272b611945155e046dd5cef11088587635e9)\n- [GitHub Issue](https://github.com/expressjs/multer/issues/1233)\n- [GitHub PR](https://github.com/expressjs/multer/pull/1256)\n",
+      "epssDetails": {
+        "percentile": "0.19870",
+        "probability": "0.00063",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2025-48997"
+        ],
+        "CWE": [
+          "CWE-248"
+        ],
+        "GHSA": [
+          "GHSA-g5hg-p3ph-g8qg"
+        ]
+      },
+      "packageName": "multer",
+      "proprietary": false,
+      "creationTime": "2025-06-04T07:00:55.886197Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2025-06-03T18:43:39Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "npm",
+      "publicationTime": "2025-06-04T14:52:32.618949Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-06-04T14:52:32.637132Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "critical",
+      "from": [
+        "travelai-platform@1.0.0",
+        "multer@1.4.5-lts.2"
+      ],
+      "upgradePath": [
+        false,
+        "multer@2.0.1"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "multer",
+      "version": "1.4.5-lts.2"
+    },
+    {
+      "id": "SNYK-JS-MULTER-10773732",
+      "title": "Uncaught Exception",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+      "credit": [
+        "Ulises Gascón"
+      ],
+      "semver": {
+        "vulnerable": [
+          ">=1.4.4-lts.1 <2.0.2"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "2.0.2"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "js",
+      "severity": "high",
+      "cvssScore": 8.7,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "multer",
+      "references": [
+        {
+          "url": "https://github.com/expressjs/multer/commit/adfeaf669f0e7fe953eab191a762164a452d143b",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://cna.openjsf.org/security-advisories.html",
+          "title": "OpenJS Advisories"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2381726",
+          "title": "Red Hat Bugzilla Bug"
+        }
+      ],
+      "cvssDetails": [],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 8.7,
+          "cvssVersion": "4.0",
+          "modificationTime": "2025-07-18T07:25:12.716596Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 7.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-07-18T07:25:12.716596Z"
+        }
+      ],
+      "description": "## Overview\n\nAffected versions of this package are vulnerable to Uncaught Exception due to improper handling of multipart requests. An attacker can cause the application to crash by sending a specially crafted malformed multi-part upload request that triggers an unhandled exception.\n## Remediation\nUpgrade `multer` to version 2.0.2 or higher.\n## References\n- [GitHub Commit](https://github.com/expressjs/multer/commit/adfeaf669f0e7fe953eab191a762164a452d143b)\n- [OpenJS Advisories](https://cna.openjsf.org/security-advisories.html)\n- [Red Hat Bugzilla Bug](https://bugzilla.redhat.com/show_bug.cgi?id=2381726)\n",
+      "epssDetails": {
+        "percentile": "0.02836",
+        "probability": "0.00017",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2025-7338"
+        ],
+        "CWE": [
+          "CWE-248"
+        ],
+        "GHSA": [
+          "GHSA-fjgf-rc76-4x9p"
+        ]
+      },
+      "packageName": "multer",
+      "proprietary": false,
+      "creationTime": "2025-07-18T07:16:18.824948Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2025-07-17T21:01:54Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "npm",
+      "publicationTime": "2025-07-18T07:16:19.192565Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-07-18T07:25:12.716596Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "high",
+      "from": [
+        "travelai-platform@1.0.0",
+        "multer@1.4.5-lts.2"
+      ],
+      "upgradePath": [
+        false,
+        "multer@2.0.2"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "multer",
+      "version": "1.4.5-lts.2"
+    },
+    {
+      "id": "SNYK-JS-NTHCHECK-1586032",
+      "title": "Regular Expression Denial of Service (ReDoS)",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:P",
+      "credit": [
+        "Yeting Li"
+      ],
+      "semver": {
+        "vulnerable": [
+          "<2.0.1"
+        ]
+      },
+      "exploit": "Proof of Concept",
+      "fixedIn": [
+        "2.0.1"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "js",
+      "severity": "high",
+      "cvssScore": 7.5,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "nth-check",
+      "references": [
+        {
+          "url": "https://github.com/fb55/nth-check/commit/9894c1d2010870c351f66c6f6efcf656e26bb726",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/fb55/nth-check/pull/9",
+          "title": "GitHub PR"
+        },
+        {
+          "url": "https://github.com/fb55/nth-check/releases/tag/v2.0.1",
+          "title": "GitHub Release"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "NVD",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "cvssV3BaseScore": 7.5,
+          "modificationTime": "2024-03-11T09:51:01.255106Z"
+        },
+        {
+          "assigner": "Red Hat",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "cvssV3BaseScore": 7.5,
+          "modificationTime": "2024-03-11T09:53:47.492594Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:P",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 7.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2024-03-06T14:01:37.512484Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "assigner": "NVD",
+          "severity": "high",
+          "baseScore": 7.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2024-03-11T09:51:01.255106Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "assigner": "Red Hat",
+          "severity": "high",
+          "baseScore": 7.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2024-03-11T09:53:47.492594Z"
+        }
+      ],
+      "description": "## Overview\n\nAffected versions of this package are vulnerable to Regular Expression Denial of Service (ReDoS) when parsing crafted invalid CSS nth-checks, due to the sub-pattern `\\s*(?:([+-]?)\\s*(\\d+))?` in `RE_NTH_ELEMENT` with quantified overlapping adjacency.\n## PoC\n```js\r\nvar nthCheck = require(\"nth-check\")\r\nfor(var i = 1; i <= 50000; i++) {\r\n    var time = Date.now();\r\n    var attack_str = '2n' + ' '.repeat(i*10000)+\"!\";\r\n    try {\r\n        nthCheck.parse(attack_str) \r\n    }\r\n    catch(err) {\r\n        var time_cost = Date.now() - time;\r\n        console.log(\"attack_str.length: \" + attack_str.length + \": \" + time_cost+\" ms\")\r\n    }\r\n}\r\n```\n\n## Details\n\nDenial of Service (DoS) describes a family of attacks, all aimed at making a system inaccessible to its original and legitimate users. There are many types of DoS attacks, ranging from trying to clog the network pipes to the system by generating a large volume of traffic from many machines (a Distributed Denial of Service - DDoS - attack) to sending crafted requests that cause a system to crash or take a disproportional amount of time to process.\n\nThe Regular expression Denial of Service (ReDoS) is a type of Denial of Service attack. Regular expressions are incredibly powerful, but they aren't very intuitive and can ultimately end up making it easy for attackers to take your site down.\n\nLet’s take the following regular expression as an example:\n```js\nregex = /A(B|C+)+D/\n```\n\nThis regular expression accomplishes the following:\n- `A` The string must start with the letter 'A'\n- `(B|C+)+` The string must then follow the letter A with either the letter 'B' or some number of occurrences of the letter 'C' (the `+` matches one or more times). The `+` at the end of this section states that we can look for one or more matches of this section.\n- `D` Finally, we ensure this section of the string ends with a 'D'\n\nThe expression would match inputs such as `ABBD`, `ABCCCCD`, `ABCBCCCD` and `ACCCCCD`\n\nIt most cases, it doesn't take very long for a regex engine to find a match:\n\n```bash\n$ time node -e '/A(B|C+)+D/.test(\"ACCCCCCCCCCCCCCCCCCCCCCCCCCCCD\")'\n0.04s user 0.01s system 95% cpu 0.052 total\n\n$ time node -e '/A(B|C+)+D/.test(\"ACCCCCCCCCCCCCCCCCCCCCCCCCCCCX\")'\n1.79s user 0.02s system 99% cpu 1.812 total\n```\n\nThe entire process of testing it against a 30 characters long string takes around ~52ms. But when given an invalid string, it takes nearly two seconds to complete the test, over ten times as long as it took to test a valid string. The dramatic difference is due to the way regular expressions get evaluated.\n\nMost Regex engines will work very similarly (with minor differences). The engine will match the first possible way to accept the current character and proceed to the next one. If it then fails to match the next one, it will backtrack and see if there was another way to digest the previous character. If it goes too far down the rabbit hole only to find out the string doesn’t match in the end, and if many characters have multiple valid regex paths, the number of backtracking steps can become very large, resulting in what is known as _catastrophic backtracking_.\n\nLet's look at how our expression runs into this problem, using a shorter string: \"ACCCX\". While it seems fairly straightforward, there are still four different ways that the engine could match those three C's:\n1. CCC\n2. CC+C\n3. C+CC\n4. C+C+C.\n\nThe engine has to try each of those combinations to see if any of them potentially match against the expression. When you combine that with the other steps the engine must take, we can use [RegEx 101 debugger](https://regex101.com/debugger) to see the engine has to take a total of 38 steps before it can determine the string doesn't match.\n\nFrom there, the number of steps the engine must use to validate a string just continues to grow.\n\n| String | Number of C's | Number of steps |\n| -------|-------------:| -----:|\n| ACCCX | 3 | 38\n| ACCCCX | 4 | 71\n| ACCCCCX | 5 | 136\n| ACCCCCCCCCCCCCCX | 14 | 65,553\n\n\nBy the time the string includes 14 C's, the engine has to take over 65,000 steps just to see if the string is valid. These extreme situations can cause them to work very slowly (exponentially related to input size, as shown above), allowing an attacker to exploit this and can cause the service to excessively consume CPU, resulting in a Denial of Service.\n\n## Remediation\nUpgrade `nth-check` to version 2.0.1 or higher.\n## References\n- [GitHub Commit](https://github.com/fb55/nth-check/commit/9894c1d2010870c351f66c6f6efcf656e26bb726)\n- [GitHub PR](https://github.com/fb55/nth-check/pull/9)\n- [GitHub Release](https://github.com/fb55/nth-check/releases/tag/v2.0.1)\n",
+      "epssDetails": {
+        "percentile": "0.30912",
+        "probability": "0.00115",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2021-3803"
+        ],
+        "CWE": [
+          "CWE-1333"
+        ]
+      },
+      "packageName": "nth-check",
+      "proprietary": false,
+      "creationTime": "2021-09-17T14:35:00.993728Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2021-09-17T14:32:39Z",
+      "exploitDetails": {
+        "sources": [
+          "Snyk"
+        ],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Proof of Concept",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Proof of Concept",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "npm",
+      "publicationTime": "2021-09-17T15:20:51Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2024-03-11T09:53:47.492594Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "high",
+      "from": [
+        "travelai-platform@1.0.0",
+        "react-scripts@5.0.1",
+        "@svgr/webpack@5.5.0",
+        "@svgr/plugin-svgo@5.5.0",
+        "svgo@1.3.2",
+        "css-select@2.1.0",
+        "nth-check@1.0.2"
+      ],
+      "upgradePath": [],
+      "isUpgradable": false,
+      "isPatchable": false,
+      "name": "nth-check",
+      "version": "1.0.2"
+    },
+    {
+      "id": "SNYK-JS-POSTCSS-5926692",
+      "title": "Improper Input Validation",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+      "credit": [
+        "Unknown"
+      ],
+      "semver": {
+        "vulnerable": [
+          "<8.4.31"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "8.4.31"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "js",
+      "severity": "medium",
+      "cvssScore": 5.3,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "postcss",
+      "references": [
+        {
+          "url": "https://github.com/postcss/postcss/commit/58cc860b4c1707510c9cd1bc1fa30b423a9ad6c5",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/postcss/postcss/pull/1890",
+          "title": "GitHub PR"
+        },
+        {
+          "url": "https://github.com/postcss/postcss/releases/tag/8.4.31",
+          "title": "GitHub Release"
+        },
+        {
+          "url": "https://github.com/postcss/postcss/blob/main/lib/tokenize.js%23L25",
+          "title": "Vulnerable Code"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "NVD",
+          "severity": "medium",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+          "cvssV3BaseScore": 5.3,
+          "modificationTime": "2024-03-11T09:53:40.363646Z"
+        },
+        {
+          "assigner": "Red Hat",
+          "severity": "medium",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+          "cvssV3BaseScore": 5.3,
+          "modificationTime": "2024-11-26T13:40:04.334293Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 5.3,
+          "cvssVersion": "3.1",
+          "modificationTime": "2024-03-06T14:09:22.228973Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+          "assigner": "NVD",
+          "severity": "medium",
+          "baseScore": 5.3,
+          "cvssVersion": "3.1",
+          "modificationTime": "2024-03-11T09:53:40.363646Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+          "assigner": "Red Hat",
+          "severity": "medium",
+          "baseScore": 5.3,
+          "cvssVersion": "3.1",
+          "modificationTime": "2024-11-26T13:40:04.334293Z"
+        }
+      ],
+      "description": "## Overview\n[postcss](https://www.npmjs.com/package/postcss) is a PostCSS is a tool for transforming styles with JS plugins.\n\nAffected versions of this package are vulnerable to Improper Input Validation when parsing external Cascading Style Sheets (CSS) with linters using PostCSS. An attacker can cause discrepancies by injecting malicious CSS rules, such as `@font-face{ font:(\\r/*);}`.\r\nThis vulnerability is because of an insecure regular expression usage in the `RE_BAD_BRACKET` variable.\n## Remediation\nUpgrade `postcss` to version 8.4.31 or higher.\n## References\n- [GitHub Commit](https://github.com/postcss/postcss/commit/58cc860b4c1707510c9cd1bc1fa30b423a9ad6c5)\n- [GitHub PR](https://github.com/postcss/postcss/pull/1890)\n- [GitHub Release](https://github.com/postcss/postcss/releases/tag/8.4.31)\n- [Vulnerable Code](https://github.com/postcss/postcss/blob/main/lib/tokenize.js#L25)\n",
+      "epssDetails": {
+        "percentile": "0.29918",
+        "probability": "0.00109",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2023-44270"
+        ],
+        "CWE": [
+          "CWE-20"
+        ]
+      },
+      "packageName": "postcss",
+      "proprietary": false,
+      "creationTime": "2023-10-01T10:42:55.486681Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2023-09-29T22:46:45Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "npm",
+      "publicationTime": "2023-10-01T11:23:35.354495Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2024-11-26T13:40:04.334293Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "medium",
+      "from": [
+        "travelai-platform@1.0.0",
+        "react-scripts@5.0.1",
+        "resolve-url-loader@4.0.0",
+        "postcss@7.0.39"
+      ],
+      "upgradePath": [],
+      "isUpgradable": false,
+      "isPatchable": false,
+      "name": "postcss",
+      "version": "7.0.39"
+    },
+    {
+      "id": "SNYK-JS-SERIALIZEJAVASCRIPT-6147607",
+      "title": "Cross-site Scripting (XSS)",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N/E:P",
+      "credit": [
+        "redonkulus"
+      ],
+      "semver": {
+        "vulnerable": [
+          "<6.0.2"
+        ]
+      },
+      "exploit": "Proof of Concept",
+      "fixedIn": [
+        "6.0.2"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "js",
+      "severity": "medium",
+      "cvssScore": 6.1,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "serialize-javascript",
+      "references": [
+        {
+          "url": "https://github.com/yahoo/serialize-javascript/commit/f27d65d3de42affe2aac14607066c293891cec4e",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/yahoo/serialize-javascript/issues/172",
+          "title": "GitHub Issue"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "NVD",
+          "severity": "medium",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+          "cvssV3BaseScore": 5.4,
+          "modificationTime": "2025-02-11T01:13:10.902488Z"
+        },
+        {
+          "assigner": "Red Hat",
+          "severity": "medium",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+          "cvssV3BaseScore": 5.4,
+          "modificationTime": "2025-02-10T14:04:52.705440Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N/E:P",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 6.1,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-02-10T17:10:24.204563Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+          "assigner": "NVD",
+          "severity": "medium",
+          "baseScore": 5.4,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-02-11T01:13:10.902488Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+          "assigner": "Red Hat",
+          "severity": "medium",
+          "baseScore": 5.4,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-02-10T14:04:52.705440Z"
+        }
+      ],
+      "description": "## Overview\n[serialize-javascript](https://www.npmjs.com/package/serialize-javascript) is a package to serialize JavaScript to a superset of JSON that includes regular expressions and functions.\n\nAffected versions of this package are vulnerable to Cross-site Scripting (XSS) due to unsanitized URLs. An Attacker can introduce unsafe `HTML` characters through non-http `URLs`.\n## PoC\n```js\r\nconst serialize = require('serialize-javascript');\r\n\r\nlet x = serialize({\r\n    x: new URL(\"x:</script>\")\r\n});\r\n\r\nconsole.log(x)\r\n```\n## Details\n\nCross-site scripting (or XSS) is a code vulnerability that occurs when an attacker “injects” a malicious script into an otherwise trusted website. The injected script gets downloaded and executed by the end user’s browser when the user interacts with the compromised website.\n\nThis is done by escaping the context of the web application; the web application then delivers that data to its users along with other trusted dynamic content, without validating it. The browser unknowingly executes malicious script on the client side (through client-side languages; usually JavaScript or HTML)  in order to perform actions that are otherwise typically blocked by the browser’s Same Origin Policy.\n\nInjecting malicious code is the most prevalent manner by which XSS is exploited; for this reason, escaping characters in order to prevent this manipulation is the top method for securing code against this vulnerability.\n\nEscaping means that the application is coded to mark key characters, and particularly key characters included in user input, to prevent those characters from being interpreted in a dangerous context. For example, in HTML, `<` can be coded as  `&lt`; and `>` can be coded as `&gt`; in order to be interpreted and displayed as themselves in text, while within the code itself, they are used for HTML tags. If malicious content is injected into an application that escapes special characters and that malicious content uses `<` and `>` as HTML tags, those characters are nonetheless not interpreted as HTML tags by the browser if they’ve been correctly escaped in the application code and in this way the attempted attack is diverted.\n \nThe most prominent use of XSS is to steal cookies (source: OWASP HttpOnly) and hijack user sessions, but XSS exploits have been used to expose sensitive information, enable access to privileged services and functionality and deliver malware. \n\n### Types of attacks\nThere are a few methods by which XSS can be manipulated:\n\n|Type|Origin|Description|\n|--|--|--|\n|**Stored**|Server|The malicious code is inserted in the application (usually as a link) by the attacker. The code is activated every time a user clicks the link.|\n|**Reflected**|Server|The attacker delivers a malicious link externally from the vulnerable web site application to a user. When clicked, malicious code is sent to the vulnerable web site, which reflects the attack back to the user’s browser.| \n|**DOM-based**|Client|The attacker forces the user’s browser to render a malicious page. The data in the page itself delivers the cross-site scripting data.|\n|**Mutated**| |The attacker injects code that appears safe, but is then rewritten and modified by the browser, while parsing the markup. An example is rebalancing unclosed quotation marks or even adding quotation marks to unquoted parameters.|\n\n### Affected environments\nThe following environments are susceptible to an XSS attack:\n\n* Web servers\n* Application servers\n* Web application environments\n\n### How to prevent\nThis section describes the top best practices designed to specifically protect your code: \n\n* Sanitize data input in an HTTP request before reflecting it back, ensuring all data is validated, filtered or escaped before echoing anything back to the user, such as the values of query parameters during searches. \n* Convert special characters such as `?`, `&`, `/`, `<`, `>` and spaces to their respective HTML or URL encoded equivalents. \n* Give users the option to disable client-side scripts.\n* Redirect invalid requests.\n* Detect simultaneous logins, including those from two separate IP addresses, and invalidate those sessions.\n* Use and enforce a Content Security Policy (source: Wikipedia) to disable any features that might be manipulated for an XSS attack.\n* Read the documentation for any of the libraries referenced in your code to understand which elements allow for embedded HTML.\n\n## Remediation\nUpgrade `serialize-javascript` to version 6.0.2 or higher.\n## References\n- [GitHub Commit](https://github.com/yahoo/serialize-javascript/commit/f27d65d3de42affe2aac14607066c293891cec4e)\n- [GitHub Issue](https://github.com/yahoo/serialize-javascript/issues/172)\n",
+      "epssDetails": {
+        "percentile": "0.68443",
+        "probability": "0.00597",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2024-11831"
+        ],
+        "CWE": [
+          "CWE-79"
+        ]
+      },
+      "packageName": "serialize-javascript",
+      "proprietary": false,
+      "creationTime": "2024-01-09T11:17:57.203071Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2024-01-09T00:19:08Z",
+      "exploitDetails": {
+        "sources": [
+          "Snyk"
+        ],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Proof of Concept",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Proof of Concept",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "npm",
+      "publicationTime": "2024-01-09T12:13:57.387613Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-02-11T01:13:10.902488Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "medium",
+      "from": [
+        "travelai-platform@1.0.0",
+        "react-scripts@5.0.1",
+        "workbox-webpack-plugin@6.6.0",
+        "workbox-build@6.6.0",
+        "rollup-plugin-terser@7.0.2",
+        "serialize-javascript@4.0.0"
+      ],
+      "upgradePath": [],
+      "isUpgradable": false,
+      "isPatchable": false,
+      "name": "serialize-javascript",
+      "version": "4.0.0"
+    },
+    {
+      "id": "SNYK-JS-WEBPACKDEVSERVER-10300775",
+      "title": "Origin Validation Error",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N/E:P",
+      "credit": [
+        "sapphi-red"
+      ],
+      "semver": {
+        "vulnerable": [
+          "<5.2.1"
+        ]
+      },
+      "exploit": "Proof of Concept",
+      "fixedIn": [
+        "5.2.1"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "js",
+      "severity": "high",
+      "cvssScore": 7.1,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "webpack-dev-server",
+      "references": [
+        {
+          "url": "https://github.com/webpack/webpack-dev-server/commit/5c9378bb01276357d7af208a0856ca2163db188e",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/webpack/webpack-dev-server/releases/tag/v5.2.1",
+          "title": "GitHub Release"
+        },
+        {
+          "url": "https://github.com/webpack/webpack-dev-server/blob/55220a800ba4e30dbde2d98785ecf4c80b32f711/lib/Server.js%23L3113-L3127",
+          "title": "Vulnerable Code"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "Red Hat",
+          "severity": "medium",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+          "cvssV3BaseScore": 6.5,
+          "modificationTime": "2025-06-04T16:55:55.556041Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:P",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 7.1,
+          "cvssVersion": "4.0",
+          "modificationTime": "2025-06-04T11:19:25.854886Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N/E:P",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 6.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-06-04T11:19:25.854886Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+          "assigner": "Red Hat",
+          "severity": "medium",
+          "baseScore": 6.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-06-04T16:55:55.556041Z"
+        }
+      ],
+      "description": "## Overview\n[webpack-dev-server](https://www.npmjs.com/package/webpack-dev-server) is an Uses webpack with a development server that provides live reloading. It should be used for development only.\n\nAffected versions of this package are vulnerable to Origin Validation Error via the`Origin` header, which allows IP address origins to connect to WebSocket in the `checkHeader` function. An attacker can obtain sensitive data when accessing a malicious website with a non-Chromium-based browser by exploiting the WebSocket connection.\r\n\r\n**Note:**\r\nChrome 94+ (and other Chromium-based browsers) users are unaffected by this vulnerability due to the non-HTTPS private access blocking feature.\n## Remediation\nUpgrade `webpack-dev-server` to version 5.2.1 or higher.\n## References\n- [GitHub Commit](https://github.com/webpack/webpack-dev-server/commit/5c9378bb01276357d7af208a0856ca2163db188e)\n- [GitHub Release](https://github.com/webpack/webpack-dev-server/releases/tag/v5.2.1)\n- [Vulnerable Code](https://github.com/webpack/webpack-dev-server/blob/55220a800ba4e30dbde2d98785ecf4c80b32f711/lib/Server.js#L3113-L3127)\n",
+      "epssDetails": {
+        "percentile": "0.03895",
+        "probability": "0.00021",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2025-30360"
+        ],
+        "CWE": [
+          "CWE-346"
+        ],
+        "GHSA": [
+          "GHSA-9jgg-88mc-972h"
+        ]
+      },
+      "packageName": "webpack-dev-server",
+      "proprietary": false,
+      "creationTime": "2025-06-04T08:18:07.161764Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2025-06-03T18:43:34Z",
+      "exploitDetails": {
+        "sources": [
+          "Snyk"
+        ],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Proof of Concept",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Proof of Concept",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "npm",
+      "publicationTime": "2025-06-04T11:19:25.842542Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-06-04T16:55:55.556041Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "high",
+      "from": [
+        "travelai-platform@1.0.0",
+        "react-scripts@5.0.1",
+        "webpack-dev-server@4.15.2"
+      ],
+      "upgradePath": [],
+      "isUpgradable": false,
+      "isPatchable": false,
+      "name": "webpack-dev-server",
+      "version": "4.15.2"
+    },
+    {
+      "id": "SNYK-JS-WEBPACKDEVSERVER-10300777",
+      "title": "Exposed Dangerous Method or Function",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N/E:P",
+      "credit": [
+        "sapphi-red"
+      ],
+      "semver": {
+        "vulnerable": [
+          "<5.2.1"
+        ]
+      },
+      "exploit": "Proof of Concept",
+      "fixedIn": [
+        "5.2.1"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "js",
+      "severity": "medium",
+      "cvssScore": 6,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "webpack-dev-server",
+      "references": [
+        {
+          "url": "https://github.com/webpack/webpack-dev-server/commit/d2575ad8dfed9207ed810b5ea0ccf465115a2239",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/webpack/webpack-dev-server/releases/tag/v5.2.1",
+          "title": "GitHub Release"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "Red Hat",
+          "severity": "medium",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N",
+          "cvssV3BaseScore": 5.3,
+          "modificationTime": "2025-06-04T16:44:48.500937Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:P",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 6,
+          "cvssVersion": "4.0",
+          "modificationTime": "2025-06-04T14:13:32.479981Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N/E:P",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 5.3,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-06-04T14:13:32.479981Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N",
+          "assigner": "Red Hat",
+          "severity": "medium",
+          "baseScore": 5.3,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-06-04T16:44:48.500937Z"
+        }
+      ],
+      "description": "## Overview\n[webpack-dev-server](https://www.npmjs.com/package/webpack-dev-server) is an Uses webpack with a development server that provides live reloading. It should be used for development only.\n\nAffected versions of this package are vulnerable to Exposed Dangerous Method or Function via the `__webpack_modules__` object. An attacker can extract sensitive source code by injecting a malicious script into their site that utilizes `Function::toString` to access and serialize the functions stored within `__webpack_modules__`. \r\n\r\n**Note:**\r\nThis is only exploitable if the attacker knows both the specific port and the output entrypoint script path.\n## Remediation\nUpgrade `webpack-dev-server` to version 5.2.1 or higher.\n## References\n- [GitHub Commit](https://github.com/webpack/webpack-dev-server/commit/d2575ad8dfed9207ed810b5ea0ccf465115a2239)\n- [GitHub Release](https://github.com/webpack/webpack-dev-server/releases/tag/v5.2.1)\n",
+      "epssDetails": {
+        "percentile": "0.11948",
+        "probability": "0.00042",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2025-30359"
+        ],
+        "CWE": [
+          "CWE-749"
+        ],
+        "GHSA": [
+          "GHSA-4v9v-hfq4-rm2v"
+        ]
+      },
+      "packageName": "webpack-dev-server",
+      "proprietary": false,
+      "creationTime": "2025-06-04T08:47:47.872425Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2025-06-03T18:43:38Z",
+      "exploitDetails": {
+        "sources": [
+          "Snyk"
+        ],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Proof of Concept",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Proof of Concept",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "npm",
+      "publicationTime": "2025-06-04T14:13:32.458461Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-06-04T16:44:48.500937Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "medium",
+      "from": [
+        "travelai-platform@1.0.0",
+        "react-scripts@5.0.1",
+        "webpack-dev-server@4.15.2"
+      ],
+      "upgradePath": [],
+      "isUpgradable": false,
+      "isPatchable": false,
+      "name": "webpack-dev-server",
+      "version": "4.15.2"
+    }
+  ],
+  "ok": false,
+  "dependencyCount": 1445,
+  "org": "acodingmedic",
+  "policy": "# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.\nversion: v1.25.1\nignore: {}\npatch: {}\n",
+  "isPrivate": true,
+  "licensesPolicy": {
+    "severities": {},
+    "orgLicenseRules": {
+      "AGPL-1.0": {
+        "licenseType": "AGPL-1.0",
+        "severity": "high",
+        "instructions": ""
+      },
+      "AGPL-3.0": {
+        "licenseType": "AGPL-3.0",
+        "severity": "high",
+        "instructions": ""
+      },
+      "Artistic-1.0": {
+        "licenseType": "Artistic-1.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "Artistic-2.0": {
+        "licenseType": "Artistic-2.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "CDDL-1.0": {
+        "licenseType": "CDDL-1.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "CPOL-1.02": {
+        "licenseType": "CPOL-1.02",
+        "severity": "high",
+        "instructions": ""
+      },
+      "EPL-1.0": {
+        "licenseType": "EPL-1.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "GPL-2.0": {
+        "licenseType": "GPL-2.0",
+        "severity": "high",
+        "instructions": ""
+      },
+      "GPL-3.0": {
+        "licenseType": "GPL-3.0",
+        "severity": "high",
+        "instructions": ""
+      },
+      "LGPL-2.0": {
+        "licenseType": "LGPL-2.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "LGPL-2.1": {
+        "licenseType": "LGPL-2.1",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "LGPL-3.0": {
+        "licenseType": "LGPL-3.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "MPL-1.1": {
+        "licenseType": "MPL-1.1",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "MPL-2.0": {
+        "licenseType": "MPL-2.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "MS-RL": {
+        "licenseType": "MS-RL",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "SimPL-2.0": {
+        "licenseType": "SimPL-2.0",
+        "severity": "high",
+        "instructions": ""
+      }
+    }
+  },
+  "packageManager": "npm",
+  "projectId": "264d0c8b-7451-460f-8b58-9585172d9051",
+  "ignoreSettings": {
+    "adminOnly": false,
+    "reasonRequired": false,
+    "disregardFilesystemIgnores": false
+  },
+  "summary": "10 vulnerable dependency paths",
+  "remediation": {
+    "unresolved": [
+      {
+        "id": "SNYK-JS-INFLIGHT-6095116",
+        "title": "Missing Release of Resource after Effective Lifetime",
+        "CVSSv3": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:P",
+        "credit": [
+          "jkomyno"
+        ],
+        "semver": {
+          "vulnerable": [
+            "*"
+          ]
+        },
+        "exploit": "Proof of Concept",
+        "fixedIn": [],
+        "patches": [],
+        "insights": {
+          "triageAdvice": null
+        },
+        "language": "js",
+        "severity": "medium",
+        "cvssScore": 6.2,
+        "functions": [],
+        "malicious": false,
+        "isDisputed": false,
+        "moduleName": "inflight",
+        "references": [
+          {
+            "url": "https://github.com/isaacs/inflight/issues/5",
+            "title": "GitHub Issue"
+          },
+          {
+            "url": "https://github.com/logdna/logdna-agent/pull/157",
+            "title": "GitHub PR"
+          }
+        ],
+        "cvssDetails": [],
+        "cvssSources": [
+          {
+            "type": "primary",
+            "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:P",
+            "assigner": "Snyk",
+            "severity": "medium",
+            "baseScore": 6.2,
+            "cvssVersion": "3.1",
+            "modificationTime": "2024-03-13T12:24:01.140165Z"
+          }
+        ],
+        "description": "## Overview\n\nAffected versions of this package are vulnerable to Missing Release of Resource after Effective Lifetime via the `makeres` function due to improperly deleting keys from the `reqs` object after execution of callbacks. This behavior causes the keys to remain in the `reqs` object, which leads to resource exhaustion.\r\n\r\nExploiting this vulnerability results in crashing the `node` process or in the application crash.\r\n\r\n**Note:**\r\nThis library is not maintained, and currently, there is no fix for this issue. To overcome this vulnerability, several dependent packages have eliminated the use of this library.\r\n\r\nTo trigger the memory leak, an attacker would need to have the ability to execute or influence the asynchronous operations that use the inflight module within the application. This typically requires access to the internal workings of the server or application, which is not commonly exposed to remote users. Therefore, “Attack vector” is marked as “Local”.\n## PoC\n```js\r\nconst inflight = require('inflight');\r\n\r\nfunction testInflight() {\r\n  let i = 0;\r\n  function scheduleNext() {\r\n    let key = `key-${i++}`;\r\n    const callback = () => {\r\n    };\r\n    for (let j = 0; j < 1000000; j++) {\r\n      inflight(key, callback);\r\n    }\r\n\r\n    setImmediate(scheduleNext);\r\n  }\r\n\r\n\r\n  if (i % 100 === 0) {\r\n    console.log(process.memoryUsage());\r\n  }\r\n\r\n  scheduleNext();\r\n}\r\n\r\ntestInflight();\r\n```\n## Remediation\nThere is no fixed version for `inflight`.\n## References\n- [GitHub Issue](https://github.com/isaacs/inflight/issues/5)\n- [GitHub PR](https://github.com/logdna/logdna-agent/pull/157)\n",
+        "epssDetails": null,
+        "identifiers": {
+          "CVE": [],
+          "CWE": [
+            "CWE-772"
+          ]
+        },
+        "packageName": "inflight",
+        "proprietary": false,
+        "creationTime": "2023-11-30T12:51:43.483198Z",
+        "functions_new": [],
+        "alternativeIds": [],
+        "disclosureTime": "2023-11-28T12:47:27Z",
+        "exploitDetails": {
+          "sources": [
+            "Snyk"
+          ],
+          "maturityLevels": [
+            {
+              "type": "secondary",
+              "level": "Proof of Concept",
+              "format": "CVSSv3"
+            },
+            {
+              "type": "primary",
+              "level": "Proof of Concept",
+              "format": "CVSSv4"
+            }
+          ]
+        },
+        "packageManager": "npm",
+        "publicationTime": "2023-11-30T12:52:55.469185Z",
+        "severityBasedOn": "CVSS",
+        "modificationTime": "2024-03-13T12:24:01.140165Z",
+        "socialTrendAlert": false,
+        "packagePopularityRank": 99,
+        "from": [
+          "travelai-platform@1.0.0",
+          "react-scripts@5.0.1",
+          "babel-jest@27.5.1",
+          "@jest/transform@27.5.1",
+          "babel-plugin-istanbul@6.1.1",
+          "test-exclude@6.0.0",
+          "glob@7.2.3",
+          "inflight@1.0.6"
+        ],
+        "upgradePath": [],
+        "isUpgradable": false,
+        "isPatchable": false,
+        "isPinnable": false,
+        "isRuntime": false,
+        "name": "inflight",
+        "version": "1.0.6",
+        "severityWithCritical": "medium"
+      },
+      {
+        "id": "SNYK-JS-NTHCHECK-1586032",
+        "title": "Regular Expression Denial of Service (ReDoS)",
+        "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:P",
+        "credit": [
+          "Yeting Li"
+        ],
+        "semver": {
+          "vulnerable": [
+            "<2.0.1"
+          ]
+        },
+        "exploit": "Proof of Concept",
+        "fixedIn": [
+          "2.0.1"
+        ],
+        "patches": [],
+        "insights": {
+          "triageAdvice": null
+        },
+        "language": "js",
+        "severity": "high",
+        "cvssScore": 7.5,
+        "functions": [],
+        "malicious": false,
+        "isDisputed": false,
+        "moduleName": "nth-check",
+        "references": [
+          {
+            "url": "https://github.com/fb55/nth-check/commit/9894c1d2010870c351f66c6f6efcf656e26bb726",
+            "title": "GitHub Commit"
+          },
+          {
+            "url": "https://github.com/fb55/nth-check/pull/9",
+            "title": "GitHub PR"
+          },
+          {
+            "url": "https://github.com/fb55/nth-check/releases/tag/v2.0.1",
+            "title": "GitHub Release"
+          }
+        ],
+        "cvssDetails": [
+          {
+            "assigner": "NVD",
+            "severity": "high",
+            "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "cvssV3BaseScore": 7.5,
+            "modificationTime": "2024-03-11T09:51:01.255106Z"
+          },
+          {
+            "assigner": "Red Hat",
+            "severity": "high",
+            "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "cvssV3BaseScore": 7.5,
+            "modificationTime": "2024-03-11T09:53:47.492594Z"
+          }
+        ],
+        "cvssSources": [
+          {
+            "type": "primary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:P",
+            "assigner": "Snyk",
+            "severity": "high",
+            "baseScore": 7.5,
+            "cvssVersion": "3.1",
+            "modificationTime": "2024-03-06T14:01:37.512484Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "assigner": "NVD",
+            "severity": "high",
+            "baseScore": 7.5,
+            "cvssVersion": "3.1",
+            "modificationTime": "2024-03-11T09:51:01.255106Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "assigner": "Red Hat",
+            "severity": "high",
+            "baseScore": 7.5,
+            "cvssVersion": "3.1",
+            "modificationTime": "2024-03-11T09:53:47.492594Z"
+          }
+        ],
+        "description": "## Overview\n\nAffected versions of this package are vulnerable to Regular Expression Denial of Service (ReDoS) when parsing crafted invalid CSS nth-checks, due to the sub-pattern `\\s*(?:([+-]?)\\s*(\\d+))?` in `RE_NTH_ELEMENT` with quantified overlapping adjacency.\n## PoC\n```js\r\nvar nthCheck = require(\"nth-check\")\r\nfor(var i = 1; i <= 50000; i++) {\r\n    var time = Date.now();\r\n    var attack_str = '2n' + ' '.repeat(i*10000)+\"!\";\r\n    try {\r\n        nthCheck.parse(attack_str) \r\n    }\r\n    catch(err) {\r\n        var time_cost = Date.now() - time;\r\n        console.log(\"attack_str.length: \" + attack_str.length + \": \" + time_cost+\" ms\")\r\n    }\r\n}\r\n```\n\n## Details\n\nDenial of Service (DoS) describes a family of attacks, all aimed at making a system inaccessible to its original and legitimate users. There are many types of DoS attacks, ranging from trying to clog the network pipes to the system by generating a large volume of traffic from many machines (a Distributed Denial of Service - DDoS - attack) to sending crafted requests that cause a system to crash or take a disproportional amount of time to process.\n\nThe Regular expression Denial of Service (ReDoS) is a type of Denial of Service attack. Regular expressions are incredibly powerful, but they aren't very intuitive and can ultimately end up making it easy for attackers to take your site down.\n\nLet’s take the following regular expression as an example:\n```js\nregex = /A(B|C+)+D/\n```\n\nThis regular expression accomplishes the following:\n- `A` The string must start with the letter 'A'\n- `(B|C+)+` The string must then follow the letter A with either the letter 'B' or some number of occurrences of the letter 'C' (the `+` matches one or more times). The `+` at the end of this section states that we can look for one or more matches of this section.\n- `D` Finally, we ensure this section of the string ends with a 'D'\n\nThe expression would match inputs such as `ABBD`, `ABCCCCD`, `ABCBCCCD` and `ACCCCCD`\n\nIt most cases, it doesn't take very long for a regex engine to find a match:\n\n```bash\n$ time node -e '/A(B|C+)+D/.test(\"ACCCCCCCCCCCCCCCCCCCCCCCCCCCCD\")'\n0.04s user 0.01s system 95% cpu 0.052 total\n\n$ time node -e '/A(B|C+)+D/.test(\"ACCCCCCCCCCCCCCCCCCCCCCCCCCCCX\")'\n1.79s user 0.02s system 99% cpu 1.812 total\n```\n\nThe entire process of testing it against a 30 characters long string takes around ~52ms. But when given an invalid string, it takes nearly two seconds to complete the test, over ten times as long as it took to test a valid string. The dramatic difference is due to the way regular expressions get evaluated.\n\nMost Regex engines will work very similarly (with minor differences). The engine will match the first possible way to accept the current character and proceed to the next one. If it then fails to match the next one, it will backtrack and see if there was another way to digest the previous character. If it goes too far down the rabbit hole only to find out the string doesn’t match in the end, and if many characters have multiple valid regex paths, the number of backtracking steps can become very large, resulting in what is known as _catastrophic backtracking_.\n\nLet's look at how our expression runs into this problem, using a shorter string: \"ACCCX\". While it seems fairly straightforward, there are still four different ways that the engine could match those three C's:\n1. CCC\n2. CC+C\n3. C+CC\n4. C+C+C.\n\nThe engine has to try each of those combinations to see if any of them potentially match against the expression. When you combine that with the other steps the engine must take, we can use [RegEx 101 debugger](https://regex101.com/debugger) to see the engine has to take a total of 38 steps before it can determine the string doesn't match.\n\nFrom there, the number of steps the engine must use to validate a string just continues to grow.\n\n| String | Number of C's | Number of steps |\n| -------|-------------:| -----:|\n| ACCCX | 3 | 38\n| ACCCCX | 4 | 71\n| ACCCCCX | 5 | 136\n| ACCCCCCCCCCCCCCX | 14 | 65,553\n\n\nBy the time the string includes 14 C's, the engine has to take over 65,000 steps just to see if the string is valid. These extreme situations can cause them to work very slowly (exponentially related to input size, as shown above), allowing an attacker to exploit this and can cause the service to excessively consume CPU, resulting in a Denial of Service.\n\n## Remediation\nUpgrade `nth-check` to version 2.0.1 or higher.\n## References\n- [GitHub Commit](https://github.com/fb55/nth-check/commit/9894c1d2010870c351f66c6f6efcf656e26bb726)\n- [GitHub PR](https://github.com/fb55/nth-check/pull/9)\n- [GitHub Release](https://github.com/fb55/nth-check/releases/tag/v2.0.1)\n",
+        "epssDetails": {
+          "percentile": "0.30912",
+          "probability": "0.00115",
+          "modelVersion": "v2025.03.14"
+        },
+        "identifiers": {
+          "CVE": [
+            "CVE-2021-3803"
+          ],
+          "CWE": [
+            "CWE-1333"
+          ]
+        },
+        "packageName": "nth-check",
+        "proprietary": false,
+        "creationTime": "2021-09-17T14:35:00.993728Z",
+        "functions_new": [],
+        "alternativeIds": [],
+        "disclosureTime": "2021-09-17T14:32:39Z",
+        "exploitDetails": {
+          "sources": [
+            "Snyk"
+          ],
+          "maturityLevels": [
+            {
+              "type": "secondary",
+              "level": "Proof of Concept",
+              "format": "CVSSv3"
+            },
+            {
+              "type": "primary",
+              "level": "Proof of Concept",
+              "format": "CVSSv4"
+            }
+          ]
+        },
+        "packageManager": "npm",
+        "publicationTime": "2021-09-17T15:20:51Z",
+        "severityBasedOn": "CVSS",
+        "modificationTime": "2024-03-11T09:53:47.492594Z",
+        "socialTrendAlert": false,
+        "packagePopularityRank": 99,
+        "from": [
+          "travelai-platform@1.0.0",
+          "react-scripts@5.0.1",
+          "@svgr/webpack@5.5.0",
+          "@svgr/plugin-svgo@5.5.0",
+          "svgo@1.3.2",
+          "css-select@2.1.0",
+          "nth-check@1.0.2"
+        ],
+        "upgradePath": [],
+        "isUpgradable": false,
+        "isPatchable": false,
+        "isPinnable": false,
+        "isRuntime": false,
+        "name": "nth-check",
+        "version": "1.0.2",
+        "severityWithCritical": "high"
+      },
+      {
+        "id": "SNYK-JS-POSTCSS-5926692",
+        "title": "Improper Input Validation",
+        "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "credit": [
+          "Unknown"
+        ],
+        "semver": {
+          "vulnerable": [
+            "<8.4.31"
+          ]
+        },
+        "exploit": "Not Defined",
+        "fixedIn": [
+          "8.4.31"
+        ],
+        "patches": [],
+        "insights": {
+          "triageAdvice": null
+        },
+        "language": "js",
+        "severity": "medium",
+        "cvssScore": 5.3,
+        "functions": [],
+        "malicious": false,
+        "isDisputed": false,
+        "moduleName": "postcss",
+        "references": [
+          {
+            "url": "https://github.com/postcss/postcss/commit/58cc860b4c1707510c9cd1bc1fa30b423a9ad6c5",
+            "title": "GitHub Commit"
+          },
+          {
+            "url": "https://github.com/postcss/postcss/pull/1890",
+            "title": "GitHub PR"
+          },
+          {
+            "url": "https://github.com/postcss/postcss/releases/tag/8.4.31",
+            "title": "GitHub Release"
+          },
+          {
+            "url": "https://github.com/postcss/postcss/blob/main/lib/tokenize.js%23L25",
+            "title": "Vulnerable Code"
+          }
+        ],
+        "cvssDetails": [
+          {
+            "assigner": "NVD",
+            "severity": "medium",
+            "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+            "cvssV3BaseScore": 5.3,
+            "modificationTime": "2024-03-11T09:53:40.363646Z"
+          },
+          {
+            "assigner": "Red Hat",
+            "severity": "medium",
+            "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+            "cvssV3BaseScore": 5.3,
+            "modificationTime": "2024-11-26T13:40:04.334293Z"
+          }
+        ],
+        "cvssSources": [
+          {
+            "type": "primary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+            "assigner": "Snyk",
+            "severity": "medium",
+            "baseScore": 5.3,
+            "cvssVersion": "3.1",
+            "modificationTime": "2024-03-06T14:09:22.228973Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+            "assigner": "NVD",
+            "severity": "medium",
+            "baseScore": 5.3,
+            "cvssVersion": "3.1",
+            "modificationTime": "2024-03-11T09:53:40.363646Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+            "assigner": "Red Hat",
+            "severity": "medium",
+            "baseScore": 5.3,
+            "cvssVersion": "3.1",
+            "modificationTime": "2024-11-26T13:40:04.334293Z"
+          }
+        ],
+        "description": "## Overview\n[postcss](https://www.npmjs.com/package/postcss) is a PostCSS is a tool for transforming styles with JS plugins.\n\nAffected versions of this package are vulnerable to Improper Input Validation when parsing external Cascading Style Sheets (CSS) with linters using PostCSS. An attacker can cause discrepancies by injecting malicious CSS rules, such as `@font-face{ font:(\\r/*);}`.\r\nThis vulnerability is because of an insecure regular expression usage in the `RE_BAD_BRACKET` variable.\n## Remediation\nUpgrade `postcss` to version 8.4.31 or higher.\n## References\n- [GitHub Commit](https://github.com/postcss/postcss/commit/58cc860b4c1707510c9cd1bc1fa30b423a9ad6c5)\n- [GitHub PR](https://github.com/postcss/postcss/pull/1890)\n- [GitHub Release](https://github.com/postcss/postcss/releases/tag/8.4.31)\n- [Vulnerable Code](https://github.com/postcss/postcss/blob/main/lib/tokenize.js#L25)\n",
+        "epssDetails": {
+          "percentile": "0.29918",
+          "probability": "0.00109",
+          "modelVersion": "v2025.03.14"
+        },
+        "identifiers": {
+          "CVE": [
+            "CVE-2023-44270"
+          ],
+          "CWE": [
+            "CWE-20"
+          ]
+        },
+        "packageName": "postcss",
+        "proprietary": false,
+        "creationTime": "2023-10-01T10:42:55.486681Z",
+        "functions_new": [],
+        "alternativeIds": [],
+        "disclosureTime": "2023-09-29T22:46:45Z",
+        "exploitDetails": {
+          "sources": [],
+          "maturityLevels": [
+            {
+              "type": "secondary",
+              "level": "Not Defined",
+              "format": "CVSSv3"
+            },
+            {
+              "type": "primary",
+              "level": "Not Defined",
+              "format": "CVSSv4"
+            }
+          ]
+        },
+        "packageManager": "npm",
+        "publicationTime": "2023-10-01T11:23:35.354495Z",
+        "severityBasedOn": "CVSS",
+        "modificationTime": "2024-11-26T13:40:04.334293Z",
+        "socialTrendAlert": false,
+        "packagePopularityRank": 99,
+        "from": [
+          "travelai-platform@1.0.0",
+          "react-scripts@5.0.1",
+          "resolve-url-loader@4.0.0",
+          "postcss@7.0.39"
+        ],
+        "upgradePath": [],
+        "isUpgradable": false,
+        "isPatchable": false,
+        "isPinnable": false,
+        "isRuntime": false,
+        "name": "postcss",
+        "version": "7.0.39",
+        "severityWithCritical": "medium"
+      },
+      {
+        "id": "SNYK-JS-SERIALIZEJAVASCRIPT-6147607",
+        "title": "Cross-site Scripting (XSS)",
+        "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N/E:P",
+        "credit": [
+          "redonkulus"
+        ],
+        "semver": {
+          "vulnerable": [
+            "<6.0.2"
+          ]
+        },
+        "exploit": "Proof of Concept",
+        "fixedIn": [
+          "6.0.2"
+        ],
+        "patches": [],
+        "insights": {
+          "triageAdvice": null
+        },
+        "language": "js",
+        "severity": "medium",
+        "cvssScore": 6.1,
+        "functions": [],
+        "malicious": false,
+        "isDisputed": false,
+        "moduleName": "serialize-javascript",
+        "references": [
+          {
+            "url": "https://github.com/yahoo/serialize-javascript/commit/f27d65d3de42affe2aac14607066c293891cec4e",
+            "title": "GitHub Commit"
+          },
+          {
+            "url": "https://github.com/yahoo/serialize-javascript/issues/172",
+            "title": "GitHub Issue"
+          }
+        ],
+        "cvssDetails": [
+          {
+            "assigner": "NVD",
+            "severity": "medium",
+            "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+            "cvssV3BaseScore": 5.4,
+            "modificationTime": "2025-02-11T01:13:10.902488Z"
+          },
+          {
+            "assigner": "Red Hat",
+            "severity": "medium",
+            "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+            "cvssV3BaseScore": 5.4,
+            "modificationTime": "2025-02-10T14:04:52.705440Z"
+          }
+        ],
+        "cvssSources": [
+          {
+            "type": "primary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N/E:P",
+            "assigner": "Snyk",
+            "severity": "medium",
+            "baseScore": 6.1,
+            "cvssVersion": "3.1",
+            "modificationTime": "2025-02-10T17:10:24.204563Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+            "assigner": "NVD",
+            "severity": "medium",
+            "baseScore": 5.4,
+            "cvssVersion": "3.1",
+            "modificationTime": "2025-02-11T01:13:10.902488Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+            "assigner": "Red Hat",
+            "severity": "medium",
+            "baseScore": 5.4,
+            "cvssVersion": "3.1",
+            "modificationTime": "2025-02-10T14:04:52.705440Z"
+          }
+        ],
+        "description": "## Overview\n[serialize-javascript](https://www.npmjs.com/package/serialize-javascript) is a package to serialize JavaScript to a superset of JSON that includes regular expressions and functions.\n\nAffected versions of this package are vulnerable to Cross-site Scripting (XSS) due to unsanitized URLs. An Attacker can introduce unsafe `HTML` characters through non-http `URLs`.\n## PoC\n```js\r\nconst serialize = require('serialize-javascript');\r\n\r\nlet x = serialize({\r\n    x: new URL(\"x:</script>\")\r\n});\r\n\r\nconsole.log(x)\r\n```\n## Details\n\nCross-site scripting (or XSS) is a code vulnerability that occurs when an attacker “injects” a malicious script into an otherwise trusted website. The injected script gets downloaded and executed by the end user’s browser when the user interacts with the compromised website.\n\nThis is done by escaping the context of the web application; the web application then delivers that data to its users along with other trusted dynamic content, without validating it. The browser unknowingly executes malicious script on the client side (through client-side languages; usually JavaScript or HTML)  in order to perform actions that are otherwise typically blocked by the browser’s Same Origin Policy.\n\nInjecting malicious code is the most prevalent manner by which XSS is exploited; for this reason, escaping characters in order to prevent this manipulation is the top method for securing code against this vulnerability.\n\nEscaping means that the application is coded to mark key characters, and particularly key characters included in user input, to prevent those characters from being interpreted in a dangerous context. For example, in HTML, `<` can be coded as  `&lt`; and `>` can be coded as `&gt`; in order to be interpreted and displayed as themselves in text, while within the code itself, they are used for HTML tags. If malicious content is injected into an application that escapes special characters and that malicious content uses `<` and `>` as HTML tags, those characters are nonetheless not interpreted as HTML tags by the browser if they’ve been correctly escaped in the application code and in this way the attempted attack is diverted.\n \nThe most prominent use of XSS is to steal cookies (source: OWASP HttpOnly) and hijack user sessions, but XSS exploits have been used to expose sensitive information, enable access to privileged services and functionality and deliver malware. \n\n### Types of attacks\nThere are a few methods by which XSS can be manipulated:\n\n|Type|Origin|Description|\n|--|--|--|\n|**Stored**|Server|The malicious code is inserted in the application (usually as a link) by the attacker. The code is activated every time a user clicks the link.|\n|**Reflected**|Server|The attacker delivers a malicious link externally from the vulnerable web site application to a user. When clicked, malicious code is sent to the vulnerable web site, which reflects the attack back to the user’s browser.| \n|**DOM-based**|Client|The attacker forces the user’s browser to render a malicious page. The data in the page itself delivers the cross-site scripting data.|\n|**Mutated**| |The attacker injects code that appears safe, but is then rewritten and modified by the browser, while parsing the markup. An example is rebalancing unclosed quotation marks or even adding quotation marks to unquoted parameters.|\n\n### Affected environments\nThe following environments are susceptible to an XSS attack:\n\n* Web servers\n* Application servers\n* Web application environments\n\n### How to prevent\nThis section describes the top best practices designed to specifically protect your code: \n\n* Sanitize data input in an HTTP request before reflecting it back, ensuring all data is validated, filtered or escaped before echoing anything back to the user, such as the values of query parameters during searches. \n* Convert special characters such as `?`, `&`, `/`, `<`, `>` and spaces to their respective HTML or URL encoded equivalents. \n* Give users the option to disable client-side scripts.\n* Redirect invalid requests.\n* Detect simultaneous logins, including those from two separate IP addresses, and invalidate those sessions.\n* Use and enforce a Content Security Policy (source: Wikipedia) to disable any features that might be manipulated for an XSS attack.\n* Read the documentation for any of the libraries referenced in your code to understand which elements allow for embedded HTML.\n\n## Remediation\nUpgrade `serialize-javascript` to version 6.0.2 or higher.\n## References\n- [GitHub Commit](https://github.com/yahoo/serialize-javascript/commit/f27d65d3de42affe2aac14607066c293891cec4e)\n- [GitHub Issue](https://github.com/yahoo/serialize-javascript/issues/172)\n",
+        "epssDetails": {
+          "percentile": "0.68443",
+          "probability": "0.00597",
+          "modelVersion": "v2025.03.14"
+        },
+        "identifiers": {
+          "CVE": [
+            "CVE-2024-11831"
+          ],
+          "CWE": [
+            "CWE-79"
+          ]
+        },
+        "packageName": "serialize-javascript",
+        "proprietary": false,
+        "creationTime": "2024-01-09T11:17:57.203071Z",
+        "functions_new": [],
+        "alternativeIds": [],
+        "disclosureTime": "2024-01-09T00:19:08Z",
+        "exploitDetails": {
+          "sources": [
+            "Snyk"
+          ],
+          "maturityLevels": [
+            {
+              "type": "secondary",
+              "level": "Proof of Concept",
+              "format": "CVSSv3"
+            },
+            {
+              "type": "primary",
+              "level": "Proof of Concept",
+              "format": "CVSSv4"
+            }
+          ]
+        },
+        "packageManager": "npm",
+        "publicationTime": "2024-01-09T12:13:57.387613Z",
+        "severityBasedOn": "CVSS",
+        "modificationTime": "2025-02-11T01:13:10.902488Z",
+        "socialTrendAlert": false,
+        "packagePopularityRank": 99,
+        "from": [
+          "travelai-platform@1.0.0",
+          "react-scripts@5.0.1",
+          "workbox-webpack-plugin@6.6.0",
+          "workbox-build@6.6.0",
+          "rollup-plugin-terser@7.0.2",
+          "serialize-javascript@4.0.0"
+        ],
+        "upgradePath": [],
+        "isUpgradable": false,
+        "isPatchable": false,
+        "isPinnable": false,
+        "isRuntime": false,
+        "name": "serialize-javascript",
+        "version": "4.0.0",
+        "severityWithCritical": "medium"
+      },
+      {
+        "id": "SNYK-JS-WEBPACKDEVSERVER-10300775",
+        "title": "Origin Validation Error",
+        "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N/E:P",
+        "credit": [
+          "sapphi-red"
+        ],
+        "semver": {
+          "vulnerable": [
+            "<5.2.1"
+          ]
+        },
+        "exploit": "Proof of Concept",
+        "fixedIn": [
+          "5.2.1"
+        ],
+        "patches": [],
+        "insights": {
+          "triageAdvice": null
+        },
+        "language": "js",
+        "severity": "high",
+        "cvssScore": 7.1,
+        "functions": [],
+        "malicious": false,
+        "isDisputed": false,
+        "moduleName": "webpack-dev-server",
+        "references": [
+          {
+            "url": "https://github.com/webpack/webpack-dev-server/commit/5c9378bb01276357d7af208a0856ca2163db188e",
+            "title": "GitHub Commit"
+          },
+          {
+            "url": "https://github.com/webpack/webpack-dev-server/releases/tag/v5.2.1",
+            "title": "GitHub Release"
+          },
+          {
+            "url": "https://github.com/webpack/webpack-dev-server/blob/55220a800ba4e30dbde2d98785ecf4c80b32f711/lib/Server.js%23L3113-L3127",
+            "title": "Vulnerable Code"
+          }
+        ],
+        "cvssDetails": [
+          {
+            "assigner": "Red Hat",
+            "severity": "medium",
+            "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+            "cvssV3BaseScore": 6.5,
+            "modificationTime": "2025-06-04T16:55:55.556041Z"
+          }
+        ],
+        "cvssSources": [
+          {
+            "type": "primary",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:P",
+            "assigner": "Snyk",
+            "severity": "high",
+            "baseScore": 7.1,
+            "cvssVersion": "4.0",
+            "modificationTime": "2025-06-04T11:19:25.854886Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N/E:P",
+            "assigner": "Snyk",
+            "severity": "medium",
+            "baseScore": 6.5,
+            "cvssVersion": "3.1",
+            "modificationTime": "2025-06-04T11:19:25.854886Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+            "assigner": "Red Hat",
+            "severity": "medium",
+            "baseScore": 6.5,
+            "cvssVersion": "3.1",
+            "modificationTime": "2025-06-04T16:55:55.556041Z"
+          }
+        ],
+        "description": "## Overview\n[webpack-dev-server](https://www.npmjs.com/package/webpack-dev-server) is an Uses webpack with a development server that provides live reloading. It should be used for development only.\n\nAffected versions of this package are vulnerable to Origin Validation Error via the`Origin` header, which allows IP address origins to connect to WebSocket in the `checkHeader` function. An attacker can obtain sensitive data when accessing a malicious website with a non-Chromium-based browser by exploiting the WebSocket connection.\r\n\r\n**Note:**\r\nChrome 94+ (and other Chromium-based browsers) users are unaffected by this vulnerability due to the non-HTTPS private access blocking feature.\n## Remediation\nUpgrade `webpack-dev-server` to version 5.2.1 or higher.\n## References\n- [GitHub Commit](https://github.com/webpack/webpack-dev-server/commit/5c9378bb01276357d7af208a0856ca2163db188e)\n- [GitHub Release](https://github.com/webpack/webpack-dev-server/releases/tag/v5.2.1)\n- [Vulnerable Code](https://github.com/webpack/webpack-dev-server/blob/55220a800ba4e30dbde2d98785ecf4c80b32f711/lib/Server.js#L3113-L3127)\n",
+        "epssDetails": {
+          "percentile": "0.03895",
+          "probability": "0.00021",
+          "modelVersion": "v2025.03.14"
+        },
+        "identifiers": {
+          "CVE": [
+            "CVE-2025-30360"
+          ],
+          "CWE": [
+            "CWE-346"
+          ],
+          "GHSA": [
+            "GHSA-9jgg-88mc-972h"
+          ]
+        },
+        "packageName": "webpack-dev-server",
+        "proprietary": false,
+        "creationTime": "2025-06-04T08:18:07.161764Z",
+        "functions_new": [],
+        "alternativeIds": [],
+        "disclosureTime": "2025-06-03T18:43:34Z",
+        "exploitDetails": {
+          "sources": [
+            "Snyk"
+          ],
+          "maturityLevels": [
+            {
+              "type": "secondary",
+              "level": "Proof of Concept",
+              "format": "CVSSv3"
+            },
+            {
+              "type": "primary",
+              "level": "Proof of Concept",
+              "format": "CVSSv4"
+            }
+          ]
+        },
+        "packageManager": "npm",
+        "publicationTime": "2025-06-04T11:19:25.842542Z",
+        "severityBasedOn": "CVSS",
+        "modificationTime": "2025-06-04T16:55:55.556041Z",
+        "socialTrendAlert": false,
+        "packagePopularityRank": 99,
+        "from": [
+          "travelai-platform@1.0.0",
+          "react-scripts@5.0.1",
+          "webpack-dev-server@4.15.2"
+        ],
+        "upgradePath": [],
+        "isUpgradable": false,
+        "isPatchable": false,
+        "isPinnable": false,
+        "isRuntime": false,
+        "name": "webpack-dev-server",
+        "version": "4.15.2",
+        "severityWithCritical": "high"
+      },
+      {
+        "id": "SNYK-JS-WEBPACKDEVSERVER-10300777",
+        "title": "Exposed Dangerous Method or Function",
+        "CVSSv3": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N/E:P",
+        "credit": [
+          "sapphi-red"
+        ],
+        "semver": {
+          "vulnerable": [
+            "<5.2.1"
+          ]
+        },
+        "exploit": "Proof of Concept",
+        "fixedIn": [
+          "5.2.1"
+        ],
+        "patches": [],
+        "insights": {
+          "triageAdvice": null
+        },
+        "language": "js",
+        "severity": "medium",
+        "cvssScore": 6,
+        "functions": [],
+        "malicious": false,
+        "isDisputed": false,
+        "moduleName": "webpack-dev-server",
+        "references": [
+          {
+            "url": "https://github.com/webpack/webpack-dev-server/commit/d2575ad8dfed9207ed810b5ea0ccf465115a2239",
+            "title": "GitHub Commit"
+          },
+          {
+            "url": "https://github.com/webpack/webpack-dev-server/releases/tag/v5.2.1",
+            "title": "GitHub Release"
+          }
+        ],
+        "cvssDetails": [
+          {
+            "assigner": "Red Hat",
+            "severity": "medium",
+            "cvssV3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N",
+            "cvssV3BaseScore": 5.3,
+            "modificationTime": "2025-06-04T16:44:48.500937Z"
+          }
+        ],
+        "cvssSources": [
+          {
+            "type": "primary",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:P",
+            "assigner": "Snyk",
+            "severity": "medium",
+            "baseScore": 6,
+            "cvssVersion": "4.0",
+            "modificationTime": "2025-06-04T14:13:32.479981Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N/E:P",
+            "assigner": "Snyk",
+            "severity": "medium",
+            "baseScore": 5.3,
+            "cvssVersion": "3.1",
+            "modificationTime": "2025-06-04T14:13:32.479981Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N",
+            "assigner": "Red Hat",
+            "severity": "medium",
+            "baseScore": 5.3,
+            "cvssVersion": "3.1",
+            "modificationTime": "2025-06-04T16:44:48.500937Z"
+          }
+        ],
+        "description": "## Overview\n[webpack-dev-server](https://www.npmjs.com/package/webpack-dev-server) is an Uses webpack with a development server that provides live reloading. It should be used for development only.\n\nAffected versions of this package are vulnerable to Exposed Dangerous Method or Function via the `__webpack_modules__` object. An attacker can extract sensitive source code by injecting a malicious script into their site that utilizes `Function::toString` to access and serialize the functions stored within `__webpack_modules__`. \r\n\r\n**Note:**\r\nThis is only exploitable if the attacker knows both the specific port and the output entrypoint script path.\n## Remediation\nUpgrade `webpack-dev-server` to version 5.2.1 or higher.\n## References\n- [GitHub Commit](https://github.com/webpack/webpack-dev-server/commit/d2575ad8dfed9207ed810b5ea0ccf465115a2239)\n- [GitHub Release](https://github.com/webpack/webpack-dev-server/releases/tag/v5.2.1)\n",
+        "epssDetails": {
+          "percentile": "0.11948",
+          "probability": "0.00042",
+          "modelVersion": "v2025.03.14"
+        },
+        "identifiers": {
+          "CVE": [
+            "CVE-2025-30359"
+          ],
+          "CWE": [
+            "CWE-749"
+          ],
+          "GHSA": [
+            "GHSA-4v9v-hfq4-rm2v"
+          ]
+        },
+        "packageName": "webpack-dev-server",
+        "proprietary": false,
+        "creationTime": "2025-06-04T08:47:47.872425Z",
+        "functions_new": [],
+        "alternativeIds": [],
+        "disclosureTime": "2025-06-03T18:43:38Z",
+        "exploitDetails": {
+          "sources": [
+            "Snyk"
+          ],
+          "maturityLevels": [
+            {
+              "type": "secondary",
+              "level": "Proof of Concept",
+              "format": "CVSSv3"
+            },
+            {
+              "type": "primary",
+              "level": "Proof of Concept",
+              "format": "CVSSv4"
+            }
+          ]
+        },
+        "packageManager": "npm",
+        "publicationTime": "2025-06-04T14:13:32.458461Z",
+        "severityBasedOn": "CVSS",
+        "modificationTime": "2025-06-04T16:44:48.500937Z",
+        "socialTrendAlert": false,
+        "packagePopularityRank": 99,
+        "from": [
+          "travelai-platform@1.0.0",
+          "react-scripts@5.0.1",
+          "webpack-dev-server@4.15.2"
+        ],
+        "upgradePath": [],
+        "isUpgradable": false,
+        "isPatchable": false,
+        "isPinnable": false,
+        "isRuntime": false,
+        "name": "webpack-dev-server",
+        "version": "4.15.2",
+        "severityWithCritical": "medium"
+      }
+    ],
+    "upgrade": {
+      "multer@1.4.5-lts.2": {
+        "upgradeTo": "multer@2.0.2",
+        "upgrades": [
+          "multer@1.4.5-lts.2",
+          "multer@1.4.5-lts.2",
+          "multer@1.4.5-lts.2",
+          "multer@1.4.5-lts.2"
+        ],
+        "vulns": [
+          "SNYK-JS-MULTER-10773732",
+          "SNYK-JS-MULTER-10299078",
+          "SNYK-JS-MULTER-10185673",
+          "SNYK-JS-MULTER-10185675"
+        ]
+      }
+    },
+    "patch": {},
+    "ignore": {},
+    "pin": {}
+  },
+  "filesystemPolicy": false,
+  "filtered": {
+    "ignore": [],
+    "patch": []
+  },
+  "uniqueCount": 10,
+  "projectName": "travelai-platform",
+  "displayTargetFile": "package-lock.json",
+  "hasUnknownVersions": false,
+  "path": "C:\\Users\\corneliusstruck\\Project Travel"
+}
