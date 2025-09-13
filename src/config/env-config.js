@@ -141,11 +141,11 @@ class EnvironmentConfig {
 
       // Database Configuration
       MONGODB_URI: Joi.string().uri().required(),
-      MONGODB_HOST: Joi.string().hostname().required(),
+      MONGODB_HOST: Joi.alternatives().try(Joi.string().hostname(), Joi.allow(null, '')).when('MONGODB_URI', { is: Joi.exist(), then: Joi.optional(), otherwise: Joi.required() }),
       MONGODB_PORT: Joi.number().port().default(27017),
-      MONGODB_DATABASE: Joi.string().required(),
-      MONGODB_USERNAME: Joi.string().required(),
-      MONGODB_PASSWORD: Joi.string().min(8).required(),
+      MONGODB_DATABASE: Joi.alternatives().try(Joi.string(), Joi.allow(null, '')).when('MONGODB_URI', { is: Joi.exist(), then: Joi.optional(), otherwise: Joi.required() }),
+      MONGODB_USERNAME: Joi.alternatives().try(Joi.string(), Joi.allow(null, '')).optional(),
+      MONGODB_PASSWORD: Joi.alternatives().try(Joi.string().min(8), Joi.allow(null, '')).optional(),
       MONGODB_AUTH_SOURCE: Joi.string().default('admin'),
       MONGODB_SSL: Joi.boolean().default(true),
       MONGODB_REPLICA_SET: Joi.string().optional(),
@@ -156,9 +156,9 @@ class EnvironmentConfig {
 
       // Redis Configuration
       REDIS_URL: Joi.string().uri().required(),
-      REDIS_HOST: Joi.string().hostname().required(),
+      REDIS_HOST: Joi.alternatives().try(Joi.string().hostname(), Joi.allow(null, '')).when('REDIS_URL', { is: Joi.exist(), then: Joi.optional(), otherwise: Joi.required() }),
       REDIS_PORT: Joi.number().port().default(6379),
-      REDIS_PASSWORD: Joi.string().min(8).required(),
+      REDIS_PASSWORD: Joi.alternatives().try(Joi.string().min(8), Joi.allow('', null)).optional(),
       REDIS_DB: Joi.number().min(0).max(15).default(0),
       REDIS_FAMILY: Joi.number().valid(4, 6).default(4),
       REDIS_KEEPALIVE: Joi.number().positive().default(30000),

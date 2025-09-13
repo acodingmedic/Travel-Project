@@ -63,7 +63,7 @@ class HolonicTravelPlanner {
       }
     });
     
-    this.port = process.env.PORT || 8080;
+    this.port = 8000; // temporary until config init
     this.holons = {};
     this.orchestration = {};
     this.configInitialized = false;
@@ -94,9 +94,7 @@ class HolonicTravelPlanner {
       console.log(`   - Total Variables: ${healthCheck.stats.totalVariables}`);
       console.log(`   - Sensitive Variables: ${healthCheck.stats.sensitiveVariables}`);
       
-      this.configInitialized = true;
-      
-    } catch (error) {
+      this.configInitialized = true;\n      this.port = Number(getConfig('PORT') || 8000);\n      } catch (error) {
       console.error('âŒ Failed to initialize environment configuration:', error);
       throw error;
     }
