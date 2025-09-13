@@ -1,0 +1,9 @@
+﻿# Snyk Code ignores
+node_modules/**
+dist/**
+coverage/**
+logs/**
+public/**
+**/*.snap
+**/*.spec.*
+**/*.test.*
