@@ -1,7 +1,7 @@
-import express from 'express';
+﻿import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import { createServer } from 'http';
+import http from 'http';\nimport https from 'https';\nimport fs from 'fs';
 import { Server } from 'socket.io';
 import winston from 'winston';
 
@@ -43,7 +43,19 @@ const logger = winston.createLogger({
 class HolonicTravelPlanner {
   constructor() {
     this.app = express();
-    this.server = createServer(this.app);
+        const useHttps = (process.env.NODE_ENV === 'production') && process.env.SSL_KEY_PATH && process.env.SSL_CERT_PATH;
+    if (useHttps) {
+      try {
+        const key = fs.readFileSync(process.env.SSL_KEY_PATH);
+        const cert = fs.readFileSync(process.env.SSL_CERT_PATH);
+        this.server = https.createServer({ key, cert }, this.app);
+      } catch (err) {
+        logger.warn('Failed to initialize HTTPS, falling back to HTTP:', err.message);
+        this.server = http.createServer(this.app);
+      }
+    } else {
+      this.server = http.createServer(this.app);
+    }
     this.io = new Server(this.server, {
       cors: {
         origin: process.env.FRONTEND_URL || "http://localhost:3000",
@@ -62,7 +74,7 @@ class HolonicTravelPlanner {
    */
   async initializeConfiguration() {
     try {
-      console.log('🔧 Initializing Environment Configuration System...');
+      console.log('ðŸ”§ Initializing Environment Configuration System...');
       
       // Initialize environment configuration
       await initializeConfig();
@@ -73,8 +85,8 @@ class HolonicTravelPlanner {
         throw new Error(`Configuration health check failed: ${JSON.stringify(healthCheck.errors)}`);
       }
       
-      console.log('✅ Environment Configuration System initialized successfully');
-      console.log(`📊 Configuration Summary:`);
+      console.log('âœ… Environment Configuration System initialized successfully');
+      console.log(`ðŸ“Š Configuration Summary:`);
       console.log(`   - Environment: ${getConfig('NODE_ENV')}`);
       console.log(`   - Application: ${getConfig('APP_NAME')} v${getConfig('APP_VERSION')}`);
       console.log(`   - Port: ${getConfig('PORT')}`);
@@ -85,7 +97,7 @@ class HolonicTravelPlanner {
       this.configInitialized = true;
       
     } catch (error) {
-      console.error('❌ Failed to initialize environment configuration:', error);
+      console.error('âŒ Failed to initialize environment configuration:', error);
       throw error;
     }
   }
@@ -207,7 +219,7 @@ class HolonicTravelPlanner {
     
     this.server.listen(this.port, () => {
       logger.info(`Holonic Travel Planner running on port ${this.port}`);
-      console.log(`🚀 Server ready at http://localhost:${this.port}`);
+      console.log(`ðŸš€ Server ready at http://localhost:${this.port}`);
     });
   }
 

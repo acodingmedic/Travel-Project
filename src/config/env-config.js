@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Environment Configuration System
  * Production-ready environment variable loader with comprehensive validation
  * GDPR-compliant secret management with encryption and access controls
@@ -344,7 +344,7 @@ class EnvironmentConfig {
       configLogger.info('Initializing encryption for sensitive data...');
       
       // Use the encryption key from environment
-      this.encryptionKey = this.config.ENCRYPTION_KEY;
+      this.encryptionKey = Buffer.from(this.config.ENCRYPTION_KEY, 'utf8');\n      if ((this.config.ENCRYPTION_ALGORITHM || '').toLowerCase() !== 'aes-256-gcm') {\n        configLogger.warn('Overriding ENCRYPTION_ALGORITHM to aes-256-gcm for integrity protection');\n        this.config.ENCRYPTION_ALGORITHM = 'aes-256-gcm';\n      }
       
       if (!this.encryptionKey || this.encryptionKey.length !== 32) {
         throw new Error('Invalid encryption key: must be exactly 32 characters');
@@ -432,17 +432,22 @@ class EnvironmentConfig {
    * @param {string} text - Text to encrypt
    * @returns {string} - Encrypted text with IV and tag
    */
-  encrypt(text) {
+    encrypt(text) {
     try {
-      const algorithm = this.config.ENCRYPTION_ALGORITHM || 'aes-256-cbc';
-      const iv = crypto.randomBytes(this.config.ENCRYPTION_IV_LENGTH || 16);
-      const cipher = crypto.createCipheriv(algorithm, this.encryptionKey, iv);
-      
+      const algorithm = 'aes-256-gcm';
+      const ivLength = Number(this.config.ENCRYPTION_IV_LENGTH || 16);
+      const iv = crypto.randomBytes(ivLength);
+      const key = Buffer.isBuffer(this.encryptionKey) ? this.encryptionKey : Buffer.from(this.encryptionKey, 'utf8');
+      const cipher = crypto.createCipheriv(algorithm, key, iv);
       let encrypted = cipher.update(text, 'utf8', 'hex');
       encrypted += cipher.final('hex');
-      
-      return `${iv.toString('hex')}:${encrypted}`;
+      const tag = cipher.getAuthTag().toString('hex');
+      return `${iv.toString('hex')}:${tag}:${encrypted}`;
     } catch (error) {
+      configLogger.error('Encryption failed:', error);
+      throw new Error('Failed to encrypt sensitive data');
+    }
+  } catch (error) {
       configLogger.error('Encryption failed:', error);
       throw new Error('Failed to encrypt sensitive data');
     }
@@ -453,19 +458,24 @@ class EnvironmentConfig {
    * @param {string} encryptedText - Encrypted text with IV and tag
    * @returns {string} - Decrypted text
    */
-  decrypt(encryptedText) {
+    decrypt(encryptedText) {
     try {
-      const [ivHex, encrypted] = encryptedText.split(':');
-      const algorithm = this.config.ENCRYPTION_ALGORITHM || 'aes-256-cbc';
+      const parts = encryptedText.split(':');
+      if (parts.length < 3) throw new Error('Invalid encrypted payload format');
+      const [ivHex, tagHex, encrypted] = parts;
+      const algorithm = 'aes-256-gcm';
       const iv = Buffer.from(ivHex, 'hex');
-      
-      const decipher = crypto.createDecipheriv(algorithm, this.encryptionKey, iv);
-      
+      const key = Buffer.isBuffer(this.encryptionKey) ? this.encryptionKey : Buffer.from(this.encryptionKey, 'utf8');
+      const decipher = crypto.createDecipheriv(algorithm, key, iv);
+      decipher.setAuthTag(Buffer.from(tagHex, 'hex'));
       let decrypted = decipher.update(encrypted, 'hex', 'utf8');
       decrypted += decipher.final('utf8');
-      
       return decrypted;
     } catch (error) {
+      configLogger.error('Decryption failed:', error);
+      throw new Error('Failed to decrypt sensitive data');
+    }
+  } catch (error) {
       configLogger.error('Decryption failed:', error);
       throw new Error('Failed to decrypt sensitive data');
     }

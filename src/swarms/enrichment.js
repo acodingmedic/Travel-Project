@@ -1,4 +1,4 @@
-import winston from 'winston';
+﻿import winston from 'winston';
 import { BaseHolon } from '../holons/base-holon.js';
 import { getConfig } from '../config/system-config.js';
 
@@ -131,19 +131,19 @@ export class EnrichmentSwarm extends BaseHolon {
     this.externalServices = {
       weatherAPI: {
         baseUrl: 'https://api.weather.com/v1',
-        apiKey: process.env.WEATHER_API_KEY || 'mock-weather-key',
+        apiKey: (process.env.OPENWEATHER_API_KEY || process.env.WEATHER_API_KEY || ''),
         rateLimit: 1000, // requests per hour
         currentUsage: 0
       },
       mapsAPI: {
         baseUrl: 'https://maps.googleapis.com/maps/api',
-        apiKey: process.env.MAPS_API_KEY || 'mock-maps-key',
+        apiKey: (process.env.GOOGLE_MAPS_API_KEY || process.env.MAPS_API_KEY || ''),
         rateLimit: 2500,
         currentUsage: 0
       },
       reviewsAPI: {
         baseUrl: 'https://api.reviews.com/v2',
-        apiKey: process.env.REVIEWS_API_KEY || 'mock-reviews-key',
+        apiKey: (process.env.REVIEWS_API_KEY || ''),
         rateLimit: 500,
         currentUsage: 0
       }
@@ -729,7 +729,7 @@ export class EnrichmentSwarm extends BaseHolon {
     await new Promise(resolve => setTimeout(resolve, 80 + Math.random() * 120));
     
     const basePrice = candidate.price || 100;
-    const priceVariation = 0.8 + Math.random() * 0.4; // ±20% variation
+    const priceVariation = 0.8 + Math.random() * 0.4; // Â±20% variation
     
     return {
       dynamicPricing: {
@@ -1136,15 +1136,17 @@ export class EnrichmentSwarm extends BaseHolon {
     return `${service}-${Buffer.from(JSON.stringify(keyData)).toString('base64').slice(0, 32)}`;
   }
 
-  updateCategoryEnrichmentStats(category, stats) {
-    if (this.enrichmentStats.categoryStats[category]) {
-      const categoryStats = this.enrichmentStats.categoryStats[category];
-      const totalEnriched = categoryStats.enriched + stats.enrichedCount;
-      
-      if (totalEnriched > 0) {
-        categoryStats.avgEnrichmentScore = 
-          (categoryStats.avgEnrichmentScore * categoryStats.enriched + stats.totalEnrichmentScore) / totalEnriched;
-      }
+    updateCategoryEnrichmentStats(category, stats) {
+    const forbidden = new Set(['__proto__','prototype','constructor']);
+    if (typeof category !== 'string' || forbidden.has(category)) return;
+    if (!Object.prototype.hasOwnProperty.call(this.enrichmentStats.categoryStats, category)) return;
+    const categoryStats = this.enrichmentStats.categoryStats[category];
+    const totalEnriched = categoryStats.enriched + stats.enrichedCount;
+    if (totalEnriched > 0) {
+      categoryStats.avgEnrichmentScore = (categoryStats.avgEnrichmentScore * categoryStats.enriched + stats.totalEnrichmentScore) / totalEnriched;
+    }
+    categoryStats.enriched = totalEnriched;
+  }
       
       categoryStats.enriched = totalEnriched;
     }
