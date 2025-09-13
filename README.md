@@ -1,6 +1,6 @@
-# TravelAI Platform
+﻿# TravelAI Platform
 
-🌍 **Intelligent travel planning platform powered by AI with swarm intelligence capabilities**
+ðŸŒ **Intelligent travel planning platform powered by AI with swarm intelligence capabilities**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org/)
@@ -8,51 +8,51 @@
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()
 [![Coverage](https://img.shields.io/badge/coverage-85%25-brightgreen)]()
 
-## 🚀 Overview
+## ðŸš€ Overview
 
 TravelAI Platform is a next-generation travel planning system that combines artificial intelligence, swarm intelligence, and modern web technologies to provide personalized travel recommendations and seamless booking experiences.
 
-### ✨ Key Features
+### âœ¨ Key Features
 
-- **🤖 AI-Powered Search**: Natural language queries with intelligent understanding
-- **🔍 Dual Interface**: Quick Ask for simple queries, Detailed Form for comprehensive planning
-- **🧠 Swarm Intelligence**: Multi-agent system for optimal travel recommendations
-- **🔒 GDPR Compliant**: Built-in privacy protection and data compliance
-- **⚡ Real-time Processing**: Live search results and dynamic pricing
-- **📱 Responsive Design**: Seamless experience across all devices
-- **🌐 Multi-language Support**: International travel planning capabilities
-- **🔐 Enterprise Security**: Advanced security monitoring and threat detection
+- **ðŸ¤– AI-Powered Search**: Natural language queries with intelligent understanding
+- **ðŸ” Dual Interface**: Quick Ask for simple queries, Detailed Form for comprehensive planning
+- **ðŸ§  Swarm Intelligence**: Multi-agent system for optimal travel recommendations
+- **ðŸ”’ GDPR Compliant**: Built-in privacy protection and data compliance
+- **âš¡ Real-time Processing**: Live search results and dynamic pricing
+- **ðŸ“± Responsive Design**: Seamless experience across all devices
+- **ðŸŒ Multi-language Support**: International travel planning capabilities
+- **ðŸ” Enterprise Security**: Advanced security monitoring and threat detection
 
-## 🏗️ Architecture
+## ðŸ—ï¸ Architecture
 
 ### System Components
 
 ```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Frontend      │    │   Backend       │    │   AI Engine     │
-│   (React)       │◄──►│   (Node.js)     │◄──►│   (Swarm)       │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-         │                       │                       │
-         ▼                       ▼                       ▼
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   UI Components │    │   API Routes    │    │   Agent System  │
-│   - QuickAsk    │    │   - Search      │    │   - Coordinator │
-│   - ClassicForm │    │   - Booking     │    │   - Specialists │
-│   - Results     │    │   - User Mgmt   │    │   - Validators  │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚   Frontend      â”‚    â”‚   Backend       â”‚    â”‚   AI Engine     â”‚
+â”‚   (React)       â”‚â—„â”€â”€â–ºâ”‚   (Node.js)     â”‚â—„â”€â”€â–ºâ”‚   (Swarm)       â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+         â”‚                       â”‚                       â”‚
+         â–¼                       â–¼                       â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚   UI Components â”‚    â”‚   API Routes    â”‚    â”‚   Agent System  â”‚
+â”‚   - QuickAsk    â”‚    â”‚   - Search      â”‚    â”‚   - Coordinator â”‚
+â”‚   - ClassicForm â”‚    â”‚   - Booking     â”‚    â”‚   - Specialists â”‚
+â”‚   - Results     â”‚    â”‚   - User Mgmt   â”‚    â”‚   - Validators  â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ### Core Systems
 
-- **🎯 Agent System**: Swarm intelligence with specialized travel agents
-- **📊 Monitoring**: Comprehensive analytics and performance tracking
-- **🔄 Orchestration**: Workflow and queue management
-- **🛡️ Security**: Advanced threat detection and compliance
-- **💾 State Management**: Distributed state with consistency guarantees
-- **🎛️ Decision Engine**: Multi-criteria decision making
-- **📡 Event Bus**: Real-time event processing and routing
+- **ðŸŽ¯ Agent System**: Swarm intelligence with specialized travel agents
+- **ðŸ“Š Monitoring**: Comprehensive analytics and performance tracking
+- **ðŸ”„ Orchestration**: Workflow and queue management
+- **ðŸ›¡ï¸ Security**: Advanced threat detection and compliance
+- **ðŸ’¾ State Management**: Distributed state with consistency guarantees
+- **ðŸŽ›ï¸ Decision Engine**: Multi-criteria decision making
+- **ðŸ“¡ Event Bus**: Real-time event processing and routing
 
-## 🛠️ Technology Stack
+## ðŸ› ï¸ Technology Stack
 
 ### Frontend
 - **React 18.3.1** - Modern UI framework
@@ -80,7 +80,7 @@ TravelAI Platform is a next-generation travel planning system that combines arti
 - **Winston** - Logging
 - **Helmet** - Security headers
 
-## 🚀 Quick Start
+## ðŸš€ Quick Start
 
 ### Prerequisites
 
@@ -128,7 +128,7 @@ npm run docker:build
 npm run docker:run
 ```
 
-## 📖 Usage Guide
+## ðŸ“– Usage Guide
 
 ### Quick Ask Interface
 
@@ -171,7 +171,7 @@ Content-Type: application/json
 GET /health
 ```
 
-## 🧪 Testing
+## ðŸ§ª Testing
 
 ### Run Tests
 
@@ -196,7 +196,7 @@ npm run test:watch
 npm run test -- --coverage
 ```
 
-## 🔧 Development
+## ðŸ”§ Development
 
 ### Code Quality
 
@@ -234,54 +234,54 @@ npm run migrate
 npm run seed
 ```
 
-## 🏗️ Project Structure
+## ðŸ—ï¸ Project Structure
 
 ```
 travelai-platform/
-├── public/                 # Static files
-│   ├── index.html         # HTML template
-│   └── manifest.json      # PWA manifest
-├── src/
-│   ├── frontend/          # React application
-│   │   ├── components/    # React components
-│   │   ├── App.jsx        # Main app component
-│   │   ├── App.css        # App styles
-│   │   ├── index.js       # Entry point
-│   │   └── index.css      # Global styles
-│   ├── agents/            # AI agent system
-│   │   ├── swarm/         # Swarm intelligence
-│   │   ├── coordinator/   # Agent coordination
-│   │   └── specialists/   # Specialized agents
-│   ├── monitoring/        # Analytics & monitoring
-│   ├── orchestration/     # Workflow management
-│   ├── compliance/        # GDPR & legal
-│   ├── security/          # Security systems
-│   ├── state/             # State management
-│   ├── decision/          # Decision engine
-│   ├── events/            # Event bus
-│   ├── config/            # Configuration
-│   ├── utils/             # Utilities
-│   └── index.js           # Backend entry point
-├── scripts/               # Build & deployment scripts
-├── tests/                 # Test files
-├── docs/                  # Documentation
-├── .env.example           # Environment template
-├── package.json           # Dependencies
-├── README.md              # This file
-└── Dockerfile             # Docker configuration
+â”œâ”€â”€ public/                 # Static files
+â”‚   â”œâ”€â”€ index.html         # HTML template
+â”‚   â””â”€â”€ manifest.json      # PWA manifest
+â”œâ”€â”€ src/
+â”‚   â”œâ”€â”€ frontend/          # React application
+â”‚   â”‚   â”œâ”€â”€ components/    # React components
+â”‚   â”‚   â”œâ”€â”€ App.jsx        # Main app component
+â”‚   â”‚   â”œâ”€â”€ App.css        # App styles
+â”‚   â”‚   â”œâ”€â”€ index.js       # Entry point
+â”‚   â”‚   â””â”€â”€ index.css      # Global styles
+â”‚   â”œâ”€â”€ agents/            # AI agent system
+â”‚   â”‚   â”œâ”€â”€ swarm/         # Swarm intelligence
+â”‚   â”‚   â”œâ”€â”€ coordinator/   # Agent coordination
+â”‚   â”‚   â””â”€â”€ specialists/   # Specialized agents
+â”‚   â”œâ”€â”€ monitoring/        # Analytics & monitoring
+â”‚   â”œâ”€â”€ orchestration/     # Workflow management
+â”‚   â”œâ”€â”€ compliance/        # GDPR & legal
+â”‚   â”œâ”€â”€ security/          # Security systems
+â”‚   â”œâ”€â”€ state/             # State management
+â”‚   â”œâ”€â”€ decision/          # Decision engine
+â”‚   â”œâ”€â”€ events/            # Event bus
+â”‚   â”œâ”€â”€ config/            # Configuration
+â”‚   â”œâ”€â”€ utils/             # Utilities
+â”‚   â””â”€â”€ index.js           # Backend entry point
+â”œâ”€â”€ scripts/               # Build & deployment scripts
+â”œâ”€â”€ tests/                 # Test files
+â”œâ”€â”€ docs/                  # Documentation
+â”œâ”€â”€ .env.example           # Environment template
+â”œâ”€â”€ package.json           # Dependencies
+â”œâ”€â”€ README.md              # This file
+â””â”€â”€ Dockerfile             # Docker configuration
 ```
 
-## 🔒 Security
+## ðŸ”’ Security
 
 ### Security Features
 
-- **🛡️ Helmet.js**: Security headers
-- **🔐 JWT Authentication**: Secure token-based auth
-- **🚦 Rate Limiting**: API abuse prevention
-- **🔍 Input Validation**: Comprehensive data validation
-- **🔒 HTTPS Enforcement**: Secure communication
-- **🛡️ CSRF Protection**: Cross-site request forgery prevention
-- **🔐 Data Encryption**: At-rest and in-transit encryption
+- **ðŸ›¡ï¸ Helmet.js**: Security headers
+- **ðŸ” JWT Authentication**: Secure token-based auth
+- **ðŸš¦ Rate Limiting**: API abuse prevention
+- **ðŸ” Input Validation**: Comprehensive data validation
+- **ðŸ”’ HTTPS Enforcement**: Secure communication
+- **ðŸ›¡ï¸ CSRF Protection**: Cross-site request forgery prevention
+- **ðŸ” Data Encryption**: At-rest and in-transit encryption
 
 ### Security Monitoring
 
@@ -290,15 +290,15 @@ travelai-platform/
 - Security event logging
 - Incident response automation
 
-## 📊 Monitoring & Analytics
+## ðŸ“Š Monitoring & Analytics
 
 ### Built-in Monitoring
 
-- **📈 Performance Metrics**: Response times, throughput
-- **🔍 Error Tracking**: Comprehensive error logging
-- **👥 User Analytics**: Behavior and usage patterns
-- **🎯 Business Metrics**: Conversion rates, engagement
-- **🏥 Health Checks**: System status monitoring
+- **ðŸ“ˆ Performance Metrics**: Response times, throughput
+- **ðŸ” Error Tracking**: Comprehensive error logging
+- **ðŸ‘¥ User Analytics**: Behavior and usage patterns
+- **ðŸŽ¯ Business Metrics**: Conversion rates, engagement
+- **ðŸ¥ Health Checks**: System status monitoring
 
 ### Dashboards
 
@@ -307,15 +307,15 @@ travelai-platform/
 - Performance optimization insights
 - Security threat monitoring
 
-## 🌍 GDPR Compliance
+## ðŸŒ GDPR Compliance
 
 ### Privacy Features
 
-- **✅ Consent Management**: Cookie and data consent
-- **🗑️ Right to Erasure**: Data deletion capabilities
-- **📋 Data Portability**: Export user data
-- **🔍 Data Transparency**: Clear data usage policies
-- **🛡️ Privacy by Design**: Built-in privacy protection
+- **âœ… Consent Management**: Cookie and data consent
+- **ðŸ—‘ï¸ Right to Erasure**: Data deletion capabilities
+- **ðŸ“‹ Data Portability**: Export user data
+- **ðŸ” Data Transparency**: Clear data usage policies
+- **ðŸ›¡ï¸ Privacy by Design**: Built-in privacy protection
 
 ### Compliance Tools
 
@@ -324,7 +324,7 @@ travelai-platform/
 - Privacy impact assessments
 - Breach notification system
 
-## 🚀 Deployment
+## ðŸš€ Deployment
 
 ### Production Deployment
 
@@ -365,7 +365,7 @@ EXPOSE 3000 8000
 CMD ["npm", "start"]
 ```
 
-## 🤝 Contributing
+## ðŸ¤ Contributing
 
 ### Development Workflow
 
@@ -394,7 +394,7 @@ test: add unit tests for agent system
 refactor: optimize database queries
 ```
 
-## 📚 API Documentation
+## ðŸ“š API Documentation
 
 ### Authentication
 
@@ -434,7 +434,7 @@ GET /api/bookings/:id
 DELETE /api/bookings/:id
 ```
 
-## 🔧 Configuration
+## ðŸ”§ Configuration
 
 ### Environment Variables
 
@@ -457,7 +457,7 @@ FEATURE_REAL_TIME_CHAT=true
 FEATURE_AI_RECOMMENDATIONS=true
 ```
 
-## 🐛 Troubleshooting
+## ðŸ› Troubleshooting
 
 ### Common Issues
 
@@ -492,15 +492,15 @@ FEATURE_AI_RECOMMENDATIONS=true
 DEBUG=travelai:* npm run dev
 ```
 
-## 📈 Performance
+## ðŸ“ˆ Performance
 
 ### Optimization Features
 
-- **⚡ Code Splitting**: Lazy loading of components
-- **🗜️ Compression**: Gzip compression for responses
-- **💾 Caching**: Redis-based caching strategy
-- **🔄 Connection Pooling**: Database connection optimization
-- **📦 Bundle Optimization**: Webpack optimization
+- **âš¡ Code Splitting**: Lazy loading of components
+- **ðŸ—œï¸ Compression**: Gzip compression for responses
+- **ðŸ’¾ Caching**: Redis-based caching strategy
+- **ðŸ”„ Connection Pooling**: Database connection optimization
+- **ðŸ“¦ Bundle Optimization**: Webpack optimization
 
 ### Performance Monitoring
 
@@ -509,7 +509,7 @@ DEBUG=travelai:* npm run dev
 - Memory usage tracking
 - Response time monitoring
 
-## 🔮 Roadmap
+## ðŸ”® Roadmap
 
 ### Upcoming Features
 
@@ -528,11 +528,11 @@ DEBUG=travelai:* npm run dev
 - **v0.9.0** - Beta release with AI integration
 - **v0.8.0** - Alpha release with basic functionality
 
-## 📄 License
+## ðŸ“„ License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## ðŸ™ Acknowledgments
 
 - **React Team** - For the amazing frontend framework
 - **Node.js Community** - For the robust backend platform
@@ -541,14 +541,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Redis** - For high-performance caching
 - **Contributors** - For their valuable contributions
 
-## 📞 Support
+## ðŸ“ž Support
 
 ### Getting Help
 
-- **📧 Email**: support@travelai.com
-- **💬 Discord**: [TravelAI Community](https://discord.gg/travelai)
-- **📖 Documentation**: [docs.travelai.com](https://docs.travelai.com)
-- **🐛 Issues**: [GitHub Issues](https://github.com/travelai/platform/issues)
+- **ðŸ“§ Email**: support@travelai.com
+- **ðŸ’¬ Discord**: [TravelAI Community](https://discord.gg/travelai)
+- **ðŸ“– Documentation**: [docs.travelai.com](https://docs.travelai.com)
+- **ðŸ› Issues**: [GitHub Issues](https://github.com/travelai/platform/issues)
 
 ### Enterprise Support
 
@@ -560,6 +560,20 @@ For enterprise customers, we offer:
 
 ---
 
-**Made with ❤️ by the TravelAI Team**
+**Made with â¤ï¸ by the TravelAI Team**
 
 *Empowering intelligent travel experiences through AI and innovation.*
+## Development (Vite)
+
+- Dev server: `npm run dev` (starts backend on 8000 and Vite on 3000)
+- Frontend only: `npm run dev:frontend` (Vite)
+- Build frontend: `npm run build:frontend` (outputs to `dist/`)
+- Preview build: `npx vite preview`
+
+### Testing (Vitest)
+- Frontend tests: `npm run test:frontend`
+- Config: `vitest.config.ts` (jsdom, V8 coverage)
+
+### HTTPS (production optional)
+- Set `SSL_KEY_PATH` and `SSL_CERT_PATH` to enable HTTPS in production for the backend.
+- Falls back to HTTP if certs are not provided.

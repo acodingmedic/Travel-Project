@@ -1,4 +1,4 @@
-version: '3.8'
+﻿version: '3.8'
 
 services:
   # TravelAI Development Application
@@ -10,7 +10,7 @@ services:
     container_name: travelai-app-dev
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "3000:3000" # Vite dev server
       - "8000:8000"
       - "9229:9229"  # Node.js debugger port
     environment:
