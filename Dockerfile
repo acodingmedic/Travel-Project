@@ -1,4 +1,4 @@
-# Multi-stage Docker build for TravelAI Platform
+﻿# Multi-stage Docker build for TravelAI Platform
 # Stage 1: Build stage for dependencies and frontend
 FROM node:18-alpine AS builder
 
@@ -16,7 +16,7 @@ RUN apk add --no-cache \
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci && npm cache clean --force
 
 # Copy source code
 COPY . .
